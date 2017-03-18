@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vutbr.fit.zpo.controller.MasterRegionController">
+    <children>
+        <AnchorPane>
+            <children>
+                <VBox minWidth="155.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <BorderPane style="-fx-border-width: 1; -fx-border-color: #dfdfdf;">
+                            <top>
+                                <Text fill="#9f9f9f" text="File information" textAlignment="CENTER" BorderPane.alignment="CENTER_LEFT">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                    <BorderPane.margin>
+                                        <Insets />
+                                    </BorderPane.margin>
+                                </Text>
+                            </top>
+                            <center>
+                                <GridPane BorderPane.alignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="65.0" minWidth="65.0" percentWidth="0.0" prefWidth="65.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="133.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="name:" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="mime type:" GridPane.rowIndex="1" />
+                                        <Label fx:id="nameText" wrapText="true" GridPane.columnIndex="1" />
+                                        <Label fx:id="mimeTypeText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="size:" GridPane.rowIndex="2" />
+                                        <Label fx:id="fileSizeText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    </children>
+                                </GridPane>
+                            </center>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                        </BorderPane>
+                        <BorderPane style="-fx-border-width: 1; -fx-border-color: #dfdfdf;">
+                            <top>
+                                <Text fill="#9f9f9f" text="Image information" textAlignment="CENTER" BorderPane.alignment="CENTER_LEFT">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                    <BorderPane.margin>
+                                        <Insets />
+                                    </BorderPane.margin>
+                                </Text>
+                            </top>
+                            <center>
+                                <GridPane BorderPane.alignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="65.0" minWidth="65.0" percentWidth="0.0" prefWidth="65.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="133.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="width:" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="height:" GridPane.rowIndex="1" />
+                                        <Text fx:id="widthText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" />
+                                        <Text fx:id="heightText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="bit depth:" GridPane.rowIndex="2" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="channels:" GridPane.rowIndex="3" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="size:" GridPane.rowIndex="4" />
+                                        <Text fx:id="bitDepthText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Text fx:id="channelsText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Text fx:id="sizeText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    </children>
+                                </GridPane>
+                            </center>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                        </BorderPane>
+                        <BorderPane style="-fx-border-width: 1; -fx-border-color: #dfdfdf;">
+                            <top>
+                                <Text fill="#9f9f9f" text="Pixel information" textAlignment="CENTER" BorderPane.alignment="CENTER_LEFT">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                    <BorderPane.margin>
+                                        <Insets />
+                                    </BorderPane.margin>
+                                </Text>
+                            </top>
+                            <center>
+                                <AnchorPane BorderPane.alignment="CENTER">
+                                    <children>
+                                        <GridPane prefHeight="16.0" prefWidth="80.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" percentWidth="0.0" prefWidth="20.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="173.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="x:" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="y:" GridPane.rowIndex="1" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" fx:id="xText" />
+                                                <Text fx:id="yText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </AnchorPane>
+                            </center>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <right>
+                                <HBox fx:id="pixelColorHbox" spacing="10.0" BorderPane.alignment="CENTER">
+                                    <children>
+                                        <Rectangle fx:id="colorBox" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="80.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+                                    </children>
+                                    <BorderPane.margin>
+                                        <Insets />
+                                    </BorderPane.margin>
+                                </HBox>
+                            </right>
+                        </BorderPane>
+                        <BorderPane fx:id="histogramPane" style="-fx-border-width: 1; -fx-border-color: #dfdfdf;">
+                            <top>
+                                <Text fill="#9f9f9f" text="Histogram" textAlignment="CENTER" BorderPane.alignment="CENTER_LEFT">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                    <BorderPane.margin>
+                                        <Insets bottom="10.0" />
+                                    </BorderPane.margin>
+                                </Text>
+                            </top>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                        </BorderPane>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>

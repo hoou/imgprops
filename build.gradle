@@ -1,0 +1,43 @@
+group 'cz.vutbr.fit.zpo'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+mainClassName = "cz.vutbr.fit.zpo.Main"
+
+repositories {
+    mavenCentral()
+}
+
+run {
+    if (project.hasProperty('args')) {
+        args project.args.split('\\s')
+    }
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.11'
+    compile 'org.openpnp:opencv:3.2.0-1'
+    compile 'com.jfoenix:jfoenix:1.0.0'
+    compile 'org.apache.tika:tika-core:1.2'
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/java"]
+            includes = ["**/*.fxml", "**/*.css"]
+        }
+    }
+}

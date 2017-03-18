@@ -1,0 +1,40 @@
+
+.chart-area-symbol {
+    -fx-background-color: null, null;
+}
+
+/*.default-color0.chart-area-symbol {*/
+    /*visibility: hidden;*/
+/*}*/
+/**/
+/*.default-color1.chart-area-symbol {*/
+    /*visibility: hidden;*/
+/*}*/
+/**/
+/*.default-color2.chart-area-symbol {*/
+    /*visibility: hidden;*/
+/*}*/
+
+.default-color0.chart-series-area-line {
+    -fx-stroke: #dd353a;
+}
+
+.default-color1.chart-series-area-line {
+    -fx-stroke: #10f01a;
+}
+
+.default-color2.chart-series-area-line {
+    -fx-stroke: #1e2be9;
+}
+
+.default-color0.chart-series-area-fill {
+    -fx-fill: rgba(255, 54, 42, 0.33);
+}
+
+.default-color1.chart-series-area-fill {
+    -fx-fill: rgba(49, 255, 50, 0.33);
+}
+
+.default-color2.chart-series-area-fill {
+    -fx-fill: rgba(60, 67, 216, 0.33);
+}
