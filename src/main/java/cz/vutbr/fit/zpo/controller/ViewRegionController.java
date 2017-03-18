@@ -37,6 +37,7 @@ public class ViewRegionController extends Controller {
     public void onStart() {
         lastPixelInformation = new PixelInformation();
         imageView.setOnMouseMoved(this::handleOnMouseMove);
+        imageView.setOnMouseExited(this::handleOnMouseExited);
     }
 
     @Override
@@ -83,6 +84,12 @@ public class ViewRegionController extends Controller {
         lastPixelInformation.setxPos(mouseEvent.getX());
         lastPixelInformation.setyPos(mouseEvent.getY());
         lastPixelInformation.setColor(ImageUtils.getColor(imageMat, (int) mouseEvent.getX(), (int) mouseEvent.getY()));
+    }
+
+    private void handleOnMouseExited(MouseEvent mouseEvent) {
+        lastPixelInformation.setColor(null);
+        lastPixelInformation.setyPos(0);
+        lastPixelInformation.setxPos(0);
     }
 
     PixelInformation getLastPixelInformation() {

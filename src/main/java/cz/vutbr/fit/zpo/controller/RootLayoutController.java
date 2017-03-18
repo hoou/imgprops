@@ -184,8 +184,11 @@ public class RootLayoutController extends Controller {
 
                 List<Text> list = masterRegionController.createTextsForPixelColor(viewRegionController.getImageMat().channels());
                 viewRegionController.getLastPixelInformation().colorProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue == null)
+                    if (newValue == null) {
+                        list.forEach(text -> text.setText(""));
                         return;
+                    }
+
                     if (list.size() == 1) {
                         list.get(0).setText(String.valueOf((int) (newValue.getRed() * 255)));
                     } else if (list.size() == 3) {
