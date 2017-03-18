@@ -10,15 +10,21 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class RootLayoutController extends Controller {
     @FXML
     public Label leftStatus;
+    @FXML
+    public Menu openRecentMenu;
     @FXML
     public CheckMenuItem showFileInformationCheckMenuItem;
     @FXML
@@ -34,8 +40,14 @@ public class RootLayoutController extends Controller {
     @FXML
     private ViewRegionController viewRegionController;
 
+    private final int maximumRecentFiles = 10;
+
     @Override
     public void onStart() {
+        MenuItem nothing = new MenuItem("no recent images");
+        nothing.setDisable(true);
+        openRecentMenu.getItems().add(nothing);
+
         showChannelsCheckMenuItem.setSelected(false);
         showChannelsCheckMenuItem.setDisable(true);
 
@@ -58,7 +70,7 @@ public class RootLayoutController extends Controller {
         masterRegionController.greenChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
         masterRegionController.blueChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
 
-        viewRegionController.viewPane.setOnMouseClicked(event -> openImage());
+        viewRegionController.viewPane.setOnMouseClicked(event -> openImageHandler());
     }
 
     private void toggleChannels() {
@@ -79,7 +91,15 @@ public class RootLayoutController extends Controller {
 
     }
 
-    public void openImage() {
+    public void openImageHandler() {
+        File file = openFileChooser();
+        if (file == null)
+            return;
+
+        loadImage(file);
+    }
+
+    private File openFileChooser() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose picture...");
         fileChooser.getExtensionFilters().addAll(
@@ -88,10 +108,10 @@ public class RootLayoutController extends Controller {
                 new FileChooser.ExtensionFilter("PNG", "*.png"),
                 new FileChooser.ExtensionFilter("BMP", "*.bmp")
         );
-        File file = fileChooser.showOpenDialog(Main.window);
-        if (file == null)
-            return;
+        return fileChooser.showOpenDialog(Main.window);
+    }
 
+    private void loadImage(File file) {
         showChannelsCheckMenuItem.setSelected(false);
         showChannelsCheckMenuItem.setDisable(true);
 
@@ -110,8 +130,37 @@ public class RootLayoutController extends Controller {
         imageLoadingService.start();
 
         imageLoadingService.setOnFailed(event -> Utils.hideSpinner());
-        imageLoadingService.setOnSucceeded(event -> Utils.hideSpinner());
+        imageLoadingService.setOnSucceeded(event -> {
+            addRecentImageMenuItem(file);
+            Utils.hideSpinner();
+        });
         imageLoadingService.setOnCancelled(event -> Utils.hideSpinner());
+    }
+
+    private void addRecentImageMenuItem(File file) {
+        // If fake menu item present, remove it. It only says, that no recent images found. Useless at this point.
+        if (openRecentMenu.getItems().get(0).isDisable()) {
+            openRecentMenu.getItems().remove(0);
+        }
+
+        // If menu item with this exactly file already exists, don't make new one, just move this to the top
+        Optional<MenuItem> existingMenuItem = openRecentMenu.getItems().stream().filter(
+                menuItem -> Objects.equals(((File) menuItem.getUserData()).getAbsolutePath(), file.getAbsolutePath())
+        ).findAny();
+        if (existingMenuItem.isPresent()) {
+            openRecentMenu.getItems().remove(existingMenuItem.get());
+            openRecentMenu.getItems().add(0, existingMenuItem.get());
+        } else {
+            MenuItem recentImageMenuItem = new MenuItem(file.getName());
+            recentImageMenuItem.setUserData(file);
+            recentImageMenuItem.setOnAction(event -> loadImage((File) recentImageMenuItem.getUserData()));
+            openRecentMenu.getItems().add(0, recentImageMenuItem);
+
+            // If maximum reached, remove least recently entry
+            if (openRecentMenu.getItems().size() > maximumRecentFiles) {
+                openRecentMenu.getItems().remove(openRecentMenu.getItems().size() - 1);
+            }
+        }
     }
 
     private class ImageLoadingService extends Service<Void> {
