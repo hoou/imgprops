@@ -92,7 +92,17 @@ public class RootLayoutController extends Controller {
         if (file == null)
             return;
 
+        showChannelsCheckMenuItem.setSelected(false);
+        showChannelsCheckMenuItem.setDisable(true);
+
+        masterRegionController.setFileInformation(null);
+        masterRegionController.setImageInformation(null);
+        masterRegionController.removeTextsForPixelColor();
+        masterRegionController.clearAllHistogramSeries();
+        masterRegionController.removeHistogramCheckboxes();
+
         viewRegionController.viewPane.setCenter(null);
+
         Utils.showSpinner();
 
         ImageLoadingService imageLoadingService = new ImageLoadingService(file);

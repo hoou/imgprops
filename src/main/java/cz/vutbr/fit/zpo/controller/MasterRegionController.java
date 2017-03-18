@@ -14,7 +14,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -91,6 +94,7 @@ public class MasterRegionController extends Controller {
      *********************************************************************** */
     private Map<String, List<Integer>> allHistogramValues = new LinkedHashMap<>();
     private ObservableList<XYChart.Series<Number, Number>> shownHistogramValues = FXCollections.observableArrayList();
+    private List<Text> pixelColorTexts = new ArrayList<>();
 
     /* ***********************************************************************
      *                                 Methods                               *
@@ -122,22 +126,46 @@ public class MasterRegionController extends Controller {
     /* ********************   File information pane   ********************** */
 
 
+    /**
+     * Set texts for file information pane.
+     *
+     * @param fileInformation If null, all texts will be erased
+     */
     void setFileInformation(FileInformation fileInformation) {
-        nameText.setText(fileInformation.getName());
-        mimeTypeText.setText(fileInformation.getMimeType());
-        fileSizeText.setText(Utils.humanReadableByteCount(fileInformation.getSize(), true));
+        if (fileInformation == null) {
+            nameText.setText("");
+            mimeTypeText.setText("");
+            fileSizeText.setText("");
+        } else {
+            nameText.setText(fileInformation.getName());
+            mimeTypeText.setText(fileInformation.getMimeType());
+            fileSizeText.setText(Utils.humanReadableByteCount(fileInformation.getSize(), true));
+        }
     }
 
 
     /* ********************   Image information pane   ********************* */
 
 
+    /**
+     * Set texts for image information pane.
+     *
+     * @param imageInformation If null, all texts will be erased
+     */
     void setImageInformation(ImageInformation imageInformation) {
-        widthText.setText(String.valueOf(imageInformation.getWidth()) + " px");
-        heightText.setText(String.valueOf(imageInformation.getHeight()) + " px");
-        bitDepthText.setText(String.valueOf(imageInformation.getBitDepth()));
-        channelsText.setText(String.valueOf(imageInformation.getChannelsCount()));
-        sizeText.setText(String.valueOf((int) imageInformation.getSize()));
+        if (imageInformation == null) {
+            widthText.setText("");
+            heightText.setText("");
+            bitDepthText.setText("");
+            channelsText.setText("");
+            sizeText.setText("");
+        } else {
+            widthText.setText(String.valueOf(imageInformation.getWidth()) + " px");
+            heightText.setText(String.valueOf(imageInformation.getHeight()) + " px");
+            bitDepthText.setText(String.valueOf(imageInformation.getBitDepth()));
+            channelsText.setText(String.valueOf(imageInformation.getChannelsCount()));
+            sizeText.setText(String.valueOf((int) imageInformation.getSize()));
+        }
     }
 
 
@@ -152,7 +180,7 @@ public class MasterRegionController extends Controller {
      * @return list of Text nodes
      */
     List<Text> createTextsForPixelColor(int numberOfChannels) {
-        List<Text> list = new ArrayList<>();
+        pixelColorTexts = new ArrayList<>();
         GridPane gridPane = new GridPane();
 
         if (numberOfChannels == 1) {
@@ -168,7 +196,7 @@ public class MasterRegionController extends Controller {
             gridPane.add(label, 0, 0);
             gridPane.add(text, 1, 0);
 
-            list.add(text);
+            pixelColorTexts.add(text);
         } else if (numberOfChannels == 3 || numberOfChannels == 4) {
             Label redLabel = new Label("Red:");
             redLabel.setTextFill(Color.RED);
@@ -195,9 +223,9 @@ public class MasterRegionController extends Controller {
             gridPane.add(blueLabel, 0, 2);
             gridPane.add(blueText, 1, 2);
 
-            list.add(redText);
-            list.add(greenText);
-            list.add(blueText);
+            pixelColorTexts.add(redText);
+            pixelColorTexts.add(greenText);
+            pixelColorTexts.add(blueText);
         }
 
         // Remove old Text nodes, if any.
@@ -207,7 +235,14 @@ public class MasterRegionController extends Controller {
 
         pixelColorHbox.getChildren().add(0, gridPane);
 
-        return list;
+        return pixelColorTexts;
+    }
+
+    void removeTextsForPixelColor() {
+        if (pixelColorHbox.getChildren().size() > 1) {
+            pixelColorHbox.getChildren().remove(0);
+        }
+        pixelColorTexts = new ArrayList<>();
     }
 
 
@@ -264,7 +299,7 @@ public class MasterRegionController extends Controller {
      * There is no need to hide or show 1 series of histogram.
      */
     void createHistogramCheckboxes() {
-        histogramPane.setBottom(null);
+        removeHistogramCheckboxes();
 
         if (allHistogramValues.size() <= 1) {
             return;
@@ -289,6 +324,10 @@ public class MasterRegionController extends Controller {
         }
 
         histogramPane.setBottom(gridPane);
+    }
+
+    void removeHistogramCheckboxes() {
+        histogramPane.setBottom(null);
     }
 
     private void setHistogramSeriesVisible(String name, boolean visible) {
