@@ -32,6 +32,8 @@ public class MasterRegionController extends Controller {
 
     /* File information pane */
     @FXML
+    public BorderPane fileInformationPane;
+    @FXML
     public Label nameText;
     private Tooltip nameTooltip = new Tooltip();
     @FXML
@@ -41,6 +43,8 @@ public class MasterRegionController extends Controller {
 
 
     /* Image information pane */
+    @FXML
+    public BorderPane imageInformationPane;
     @FXML
     private Text widthText;
     @FXML
@@ -55,6 +59,8 @@ public class MasterRegionController extends Controller {
 
     /* Pixel information pane */
     @FXML
+    public BorderPane pixelInformationPane;
+    @FXML
     public Text xText;
     @FXML
     public Text yText;
@@ -66,13 +72,13 @@ public class MasterRegionController extends Controller {
 
     /* Channels pane */
     @FXML
+    public BorderPane channelsPane;
+    @FXML
     public JFXCheckBox redChannelCheckbox;
     @FXML
     public JFXCheckBox greenChannelCheckbox;
     @FXML
     public JFXCheckBox blueChannelCheckbox;
-    @FXML
-    public BorderPane channelsPane;
 
 
     /* Histogram pane */
@@ -85,7 +91,6 @@ public class MasterRegionController extends Controller {
      *********************************************************************** */
     private Map<String, List<Integer>> allHistogramValues = new LinkedHashMap<>();
     private ObservableList<XYChart.Series<Number, Number>> shownHistogramValues = FXCollections.observableArrayList();
-
 
     /* ***********************************************************************
      *                                 Methods                               *

@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -19,13 +20,35 @@ public class RootLayoutController extends Controller {
     @FXML
     public Label leftStatus;
     @FXML
+    public CheckMenuItem showFileInformationCheckMenuItem;
+    @FXML
+    public CheckMenuItem showImageInformationCheckMenuItem;
+    @FXML
+    public CheckMenuItem showPixelInformationCheckMenuItem;
+    @FXML
+    public CheckMenuItem showChannelsCheckMenuItem;
+    @FXML
+    public CheckMenuItem showHistogramCheckMenuItem;
+    @FXML
     private MasterRegionController masterRegionController;
     @FXML
     private ViewRegionController viewRegionController;
 
     @Override
     public void onStart() {
-        viewRegionController.clickableOverlay.setOnMouseClicked(event -> openImage());
+        showChannelsCheckMenuItem.setSelected(false);
+        showChannelsCheckMenuItem.setDisable(true);
+
+        masterRegionController.fileInformationPane.visibleProperty().bind(showFileInformationCheckMenuItem.selectedProperty());
+        masterRegionController.fileInformationPane.managedProperty().bind(showFileInformationCheckMenuItem.selectedProperty());
+        masterRegionController.imageInformationPane.visibleProperty().bind(showImageInformationCheckMenuItem.selectedProperty());
+        masterRegionController.imageInformationPane.managedProperty().bind(showImageInformationCheckMenuItem.selectedProperty());
+        masterRegionController.pixelInformationPane.visibleProperty().bind(showPixelInformationCheckMenuItem.selectedProperty());
+        masterRegionController.pixelInformationPane.managedProperty().bind(showPixelInformationCheckMenuItem.selectedProperty());
+        masterRegionController.channelsPane.visibleProperty().bind(showChannelsCheckMenuItem.selectedProperty());
+        masterRegionController.channelsPane.managedProperty().bind(showChannelsCheckMenuItem.selectedProperty());
+        masterRegionController.histogramPane.visibleProperty().bind(showHistogramCheckMenuItem.selectedProperty());
+        masterRegionController.histogramPane.managedProperty().bind(showHistogramCheckMenuItem.selectedProperty());
 
         masterRegionController.xText.textProperty().bind(viewRegionController.getLastPixelInformation().xPosProperty().asString("%.0f"));
         masterRegionController.yText.textProperty().bind(viewRegionController.getLastPixelInformation().yPosProperty().asString("%.0f"));
@@ -34,6 +57,8 @@ public class RootLayoutController extends Controller {
         masterRegionController.redChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
         masterRegionController.greenChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
         masterRegionController.blueChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
+
+        viewRegionController.clickableOverlay.setOnMouseClicked(event -> openImage());
     }
 
     private void toggleChannels() {
@@ -171,12 +196,12 @@ public class RootLayoutController extends Controller {
                 viewRegionController.imageView.setVisible(true);
 
                 if (viewRegionController.getImageMat().channels() == 3 || viewRegionController.getImageMat().channels() == 4) {
-                    masterRegionController.channelsPane.setVisible(true);
-                    masterRegionController.channelsPane.setManaged(true);
+                    showChannelsCheckMenuItem.setDisable(false);
+                    showChannelsCheckMenuItem.setSelected(true);
                     masterRegionController.setAllChannelCheckboxes();
                 } else {
-                    masterRegionController.channelsPane.setVisible(false);
-                    masterRegionController.channelsPane.setManaged(false);
+                    showChannelsCheckMenuItem.setSelected(false);
+                    showChannelsCheckMenuItem.setDisable(true);
                 }
             });
             return null;
