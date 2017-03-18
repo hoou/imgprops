@@ -6,11 +6,9 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXSpinner;
 import cz.vutbr.fit.zpo.Main;
 import javafx.scene.Node;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class Utils {
@@ -61,8 +59,6 @@ public class Utils {
 
     public static void showSpinner() {
         if (!isSpinnerShown) {
-            VBox vbox = (VBox) root.getChildren().get(0);
-            vbox.getChildren().get(1).setEffect(new BoxBlur(5, 5, 2));
             root.getChildren().add(spinnerParent);
             isSpinnerShown = true;
         }
@@ -70,9 +66,7 @@ public class Utils {
 
     public static void hideSpinner() {
         if (isSpinnerShown) {
-            VBox vbox = (VBox) root.getChildren().get(0);
             root.getChildren().remove(spinnerParent);
-            vbox.getChildren().get(1).setEffect(null);
             isSpinnerShown = false;
         }
     }
