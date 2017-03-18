@@ -22,8 +22,6 @@ public class RootLayoutController extends Controller {
     private MasterRegionController masterRegionController;
     @FXML
     private ViewRegionController viewRegionController;
-    @FXML
-    private SideRegionController sideRegionController;
 
     @Override
     public void onStart() {
@@ -33,16 +31,16 @@ public class RootLayoutController extends Controller {
         masterRegionController.yText.textProperty().bind(viewRegionController.getLastPixelInformation().yPosProperty().asString("%.0f"));
         masterRegionController.colorBox.fillProperty().bind(viewRegionController.getLastPixelInformation().colorProperty());
 
-        sideRegionController.redChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
-        sideRegionController.greenChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
-        sideRegionController.blueChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
+        masterRegionController.redChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
+        masterRegionController.greenChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
+        masterRegionController.blueChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
     }
 
     private void toggleChannels() {
         viewRegionController.toggleChannels(
-                sideRegionController.redChannelCheckbox.isSelected(),
-                sideRegionController.greenChannelCheckbox.isSelected(),
-                sideRegionController.blueChannelCheckbox.isSelected()
+                masterRegionController.redChannelCheckbox.isSelected(),
+                masterRegionController.greenChannelCheckbox.isSelected(),
+                masterRegionController.blueChannelCheckbox.isSelected()
         );
     }
 
@@ -84,7 +82,7 @@ public class RootLayoutController extends Controller {
 
         File file;
 
-        public ImageLoadingService(File file) {
+        ImageLoadingService(File file) {
             this.file = file;
         }
 
@@ -173,10 +171,12 @@ public class RootLayoutController extends Controller {
                 viewRegionController.imageView.setVisible(true);
 
                 if (viewRegionController.getImageMat().channels() == 3 || viewRegionController.getImageMat().channels() == 4) {
-                    sideRegionController.channelsPane.setVisible(true);
-                    sideRegionController.setAllChannelCheckboxes();
+                    masterRegionController.channelsPane.setVisible(true);
+                    masterRegionController.channelsPane.setManaged(true);
+                    masterRegionController.setAllChannelCheckboxes();
                 } else {
-                    sideRegionController.channelsPane.setVisible(false);
+                    masterRegionController.channelsPane.setVisible(false);
+                    masterRegionController.channelsPane.setManaged(false);
                 }
             });
             return null;
