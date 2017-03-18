@@ -58,7 +58,7 @@ public class RootLayoutController extends Controller {
         masterRegionController.greenChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
         masterRegionController.blueChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
 
-        viewRegionController.clickableOverlay.setOnMouseClicked(event -> openImage());
+        viewRegionController.viewPane.setOnMouseClicked(event -> openImage());
     }
 
     private void toggleChannels() {
@@ -92,6 +92,7 @@ public class RootLayoutController extends Controller {
         if (file == null)
             return;
 
+        viewRegionController.viewPane.setCenter(null);
         Utils.showSpinner();
 
         ImageLoadingService imageLoadingService = new ImageLoadingService(file);
@@ -129,15 +130,17 @@ public class RootLayoutController extends Controller {
         protected Void call() {
             updateMessage("Checking file type");
             if (!FileUtils.isFileImage(file)) {
-                updateMessage("Loaded file is not an image");
-                throw new IllegalArgumentException(getMessage());
+                String message = "Loaded file is not an image";
+                updateMessage(message);
+                throw new IllegalArgumentException(message);
             }
 
             updateMessage("Loading image");
             boolean wasImageSet = viewRegionController.setImage(file);
             if (!wasImageSet) {
-                updateMessage("Image format not supported");
-                throw new IllegalArgumentException(getMessage());
+                String message = "Image format not supported";
+                updateMessage(message);
+                throw new IllegalArgumentException(message);
             }
 
             updateMessage("Loading histogram");
@@ -192,8 +195,7 @@ public class RootLayoutController extends Controller {
                     }
                 });
 
-                viewRegionController.clickableOverlay.setVisible(false);
-                viewRegionController.imageView.setVisible(true);
+                viewRegionController.setImageView();
 
                 if (viewRegionController.getImageMat().channels() == 3 || viewRegionController.getImageMat().channels() == 4) {
                     showChannelsCheckMenuItem.setDisable(false);

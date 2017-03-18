@@ -17,7 +17,7 @@ public class Utils {
     private static boolean isSpinnerShown;
 
     static {
-        root = (Pane) Main.window.getScene().getRoot();
+        root = (Pane) Main.window.getScene().getRoot().lookup("#viewStackPane");
         createSpinner();
         isSpinnerShown = false;
     }

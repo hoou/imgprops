@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
@@ -19,18 +21,22 @@ import static org.opencv.imgcodecs.Imgcodecs.*;
 
 public class ViewRegionController extends Controller {
     @FXML
-    public ImageView imageView;
+    public BorderPane viewPane;
     @FXML
-    public BorderPane clickableOverlay;
+    public Text clickHereText;
+    @FXML
+    public StackPane viewStackPane;
 
+
+    private ImageView imageView = new ImageView();
     private Mat imageMat;
     private List<Mat> channelPlanes;
-
     private PixelInformation lastPixelInformation;
 
     @Override
     public void onStart() {
         lastPixelInformation = new PixelInformation();
+        imageView.setOnMouseMoved(this::handleOnMouseMove);
     }
 
     @Override
@@ -43,11 +49,11 @@ public class ViewRegionController extends Controller {
 
     }
 
-    public Mat getImageMat() {
+    Mat getImageMat() {
         return imageMat;
     }
 
-    public boolean setImage(File file) {
+    boolean setImage(File file) {
         imageMat = imread(file.getAbsolutePath(), CV_LOAD_IMAGE_ANYCOLOR | CV_LOAD_IMAGE_ANYDEPTH);
 
         if (imageMat.empty())
@@ -55,20 +61,20 @@ public class ViewRegionController extends Controller {
 
         channelPlanes = ImageUtils.splitImageByChannels(imageMat);
 
-        setImageView();
-
         return true;
     }
 
-    private void setImageView() {
+    void setImageView() {
         Image image = OpenCvUtils.mat2Image(imageMat);
 
         imageView.setFitWidth(imageMat.cols());
         imageView.setFitHeight(imageMat.rows());
         imageView.setImage(image);
+        viewPane.getChildren().remove(clickHereText);
+        viewPane.setCenter(imageView);
     }
 
-    public void handleOnMouseMove(MouseEvent mouseEvent) {
+    private void handleOnMouseMove(MouseEvent mouseEvent) {
         ImageView imageView = (ImageView) mouseEvent.getSource();
         if (imageView.getImage() == null) {
             return;
@@ -79,11 +85,11 @@ public class ViewRegionController extends Controller {
         lastPixelInformation.setColor(ImageUtils.getColor(imageMat, (int) mouseEvent.getX(), (int) mouseEvent.getY()));
     }
 
-    public PixelInformation getLastPixelInformation() {
+    PixelInformation getLastPixelInformation() {
         return lastPixelInformation;
     }
 
-    public void toggleChannels(boolean red, boolean green, boolean blue) {
+    void toggleChannels(boolean red, boolean green, boolean blue) {
         List<Mat> channelsToShow = new ArrayList<>();
 
         if (blue) {

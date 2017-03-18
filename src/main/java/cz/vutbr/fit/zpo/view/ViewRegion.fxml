@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vutbr.fit.zpo.controller.ViewRegionController">
     <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-              <ImageView fx:id="imageView" fitHeight="545.0" fitWidth="430.0" onMouseMoved="#handleOnMouseMove" pickOnBounds="true" preserveRatio="true" visible="false" BorderPane.alignment="CENTER" />
-         </center>
-      </BorderPane>
-      <BorderPane fx:id="clickableOverlay" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to open image" BorderPane.alignment="CENTER" />
-         </center>
-      </BorderPane>
+      <StackPane fx:id="viewStackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <BorderPane fx:id="viewPane" prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <Text fx:id="clickHereText" strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to open image" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+         </children>
+      </StackPane>
     </children>
 </AnchorPane>
