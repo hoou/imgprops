@@ -1,15 +1,11 @@
 package cz.vutbr.fit.zpo.utils;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXSpinner;
 import cz.vutbr.fit.zpo.Main;
+import cz.vutbr.fit.zpo.view.InformationDialog;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 
 public class Utils {
     private static Pane root;
@@ -28,18 +24,8 @@ public class Utils {
     }
 
     public static void showErrorDialog(String message) {
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Error"));
-        content.setBody(new Text(message));
-
-        JFXButton button = new JFXButton("Ok");
-        button.setStyle("-fx-background-color: darkgray; -fx-min-width: 80px");
-        content.setActions(button);
-
-        JFXDialog dialog = new JFXDialog((StackPane) Main.window.getScene().getRoot(), content, JFXDialog.DialogTransition.CENTER);
+        InformationDialog dialog = new InformationDialog("ERROR", message);
         dialog.show();
-
-        button.setOnAction(event -> dialog.close());
     }
 
     /**
