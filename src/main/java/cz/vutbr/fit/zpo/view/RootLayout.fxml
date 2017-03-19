@@ -45,9 +45,9 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-                <SplitPane dividerPositions="0.5" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+                <SplitPane fx:id="splitPane" focusTraversable="true" VBox.vgrow="ALWAYS">
                     <items>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="450.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true">
                             <content>
                                 <AnchorPane>
                                     <children>

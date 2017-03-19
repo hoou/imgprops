@@ -27,12 +27,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Main.window = primaryStage;
         Main.window.setTitle("imgprops");
-
-        initRootLayout();
-
         Main.window.setMaximized(true);
 
-//        showOverview();
+        initRootLayout();
     }
 
     @Override

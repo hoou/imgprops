@@ -5,13 +5,12 @@ import cz.vutbr.fit.zpo.utils.FileUtils;
 import cz.vutbr.fit.zpo.utils.ImageUtils;
 import cz.vutbr.fit.zpo.utils.Utils;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
@@ -36,6 +35,8 @@ public class RootLayoutController extends Controller {
     @FXML
     public CheckMenuItem showHistogramCheckMenuItem;
     @FXML
+    public SplitPane splitPane;
+    @FXML
     private MasterRegionController masterRegionController;
     @FXML
     private ViewRegionController viewRegionController;
@@ -44,6 +45,8 @@ public class RootLayoutController extends Controller {
 
     @Override
     public void onStart() {
+        setSplitPaneInitialDividerPosition();
+
         MenuItem nothing = new MenuItem("no recent images");
         nothing.setDisable(true);
         openRecentMenu.getItems().add(nothing);
@@ -71,6 +74,18 @@ public class RootLayoutController extends Controller {
         masterRegionController.blueChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
 
         viewRegionController.viewPane.setOnMouseClicked(event -> openImageHandler());
+    }
+
+    private void setSplitPaneInitialDividerPosition() {
+        Main.window.showingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    splitPane.setDividerPositions(500 / Main.window.getWidth());
+                    observable.removeListener(this);
+                }
+            }
+        });
     }
 
     private void toggleChannels() {
