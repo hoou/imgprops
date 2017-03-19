@@ -16,7 +16,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vutbr.fit.zpo.controller.RootLayoutController">
+<StackPane fx:id="rootStackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vutbr.fit.zpo.controller.RootLayoutController">
     <children>
         <VBox prefHeight="600.0" prefWidth="900.0">
             <children>
@@ -26,7 +26,7 @@
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#openImageHandler" text="Open image…" />
                                 <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent" />
-                                <MenuItem mnemonicParsing="false" text="Quit" />
+                                <MenuItem mnemonicParsing="false" onAction="#exitApplicationHandler" text="Exit" />
                             </items>
                         </Menu>
                   <Menu mnemonicParsing="false" text="View">
@@ -45,7 +45,7 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-                <SplitPane fx:id="splitPane" focusTraversable="true" VBox.vgrow="ALWAYS">
+                <SplitPane fx:id="splitPane" dividerPositions="0.5" focusTraversable="true" VBox.vgrow="ALWAYS">
                     <items>
                         <ScrollPane fitToHeight="true" fitToWidth="true">
                             <content>

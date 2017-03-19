@@ -4,13 +4,16 @@ import cz.vutbr.fit.zpo.Main;
 import cz.vutbr.fit.zpo.utils.FileUtils;
 import cz.vutbr.fit.zpo.utils.ImageUtils;
 import cz.vutbr.fit.zpo.utils.Utils;
+import cz.vutbr.fit.zpo.view.ConfirmationDialog;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
@@ -20,6 +23,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class RootLayoutController extends Controller {
+    private final int maximumRecentFiles = 10;
+
+
     @FXML
     public Label leftStatus;
     @FXML
@@ -37,11 +43,11 @@ public class RootLayoutController extends Controller {
     @FXML
     public SplitPane splitPane;
     @FXML
+    public StackPane rootStackPane;
+    @FXML
     private MasterRegionController masterRegionController;
     @FXML
     private ViewRegionController viewRegionController;
-
-    private final int maximumRecentFiles = 10;
 
     @Override
     public void onStart() {
@@ -176,6 +182,16 @@ public class RootLayoutController extends Controller {
                 openRecentMenu.getItems().remove(openRecentMenu.getItems().size() - 1);
             }
         }
+    }
+
+    public void exitApplicationHandler(ActionEvent actionEvent) {
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog("Confirm Exit", "Are you sure you want to exit imgprops?") {
+            @Override
+            public void onConfirm() {
+                Platform.exit();
+            }
+        };
+        confirmationDialog.show();
     }
 
     private class ImageLoadingService extends Service<Void> {
