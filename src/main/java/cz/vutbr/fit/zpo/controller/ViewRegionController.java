@@ -65,9 +65,7 @@ public class ViewRegionController extends Controller {
         return true;
     }
 
-    void setImageView() {
-        Image image = OpenCvUtils.mat2Image(imageMat);
-
+    void setImageView(Image image) {
         imageView.setFitWidth(imageMat.cols());
         imageView.setFitHeight(imageMat.rows());
         imageView.setImage(image);
@@ -121,6 +119,6 @@ public class ViewRegionController extends Controller {
         Core.merge(channelsToShow, mergedChannels);
 
         imageMat = mergedChannels;
-        setImageView();
+        setImageView(OpenCvUtils.mat2Image(imageMat));
     }
 }

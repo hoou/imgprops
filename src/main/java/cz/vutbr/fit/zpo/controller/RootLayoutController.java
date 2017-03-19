@@ -1,8 +1,11 @@
 package cz.vutbr.fit.zpo.controller;
 
 import cz.vutbr.fit.zpo.Main;
+import cz.vutbr.fit.zpo.dto.FileInformation;
+import cz.vutbr.fit.zpo.dto.ImageInformation;
 import cz.vutbr.fit.zpo.utils.FileUtils;
 import cz.vutbr.fit.zpo.utils.ImageUtils;
+import cz.vutbr.fit.zpo.utils.OpenCvUtils;
 import cz.vutbr.fit.zpo.utils.Utils;
 import cz.vutbr.fit.zpo.view.ConfirmationDialog;
 import cz.vutbr.fit.zpo.view.InformationDialog;
@@ -14,6 +17,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -248,7 +252,7 @@ public class RootLayoutController extends Controller {
         @Override
         protected void succeeded() {
             super.succeeded();
-            new SetupGuiTask(file).run();
+            new Thread(new SetupGuiTask(file)).start();
             updateMessage("Done");
         }
 
@@ -269,10 +273,18 @@ public class RootLayoutController extends Controller {
 
         @Override
         protected Void call() throws Exception {
-            Platform.runLater(() -> {
-                masterRegionController.setFileInformation(FileUtils.getFileInformation(file));
+            FileInformation fileInformation;
+            ImageInformation imageInformation;
+            Image image;
 
-                masterRegionController.setImageInformation(ImageUtils.getImageInformation(viewRegionController.getImageMat()));
+            fileInformation = FileUtils.getFileInformation(file);
+            imageInformation = ImageUtils.getImageInformation(viewRegionController.getImageMat());
+            image = OpenCvUtils.mat2Image(viewRegionController.getImageMat());
+
+            Platform.runLater(() -> {
+                masterRegionController.setFileInformation(fileInformation);
+
+                masterRegionController.setImageInformation(imageInformation);
 
                 masterRegionController.clearAllHistogramSeries();
                 masterRegionController.showAllHistogramSeries();
@@ -294,7 +306,7 @@ public class RootLayoutController extends Controller {
                     }
                 });
 
-                viewRegionController.setImageView();
+                viewRegionController.setImageView(image);
 
                 if (viewRegionController.getImageMat().channels() == 3 || viewRegionController.getImageMat().channels() == 4) {
                     showChannelsCheckMenuItem.setDisable(false);
