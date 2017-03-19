@@ -70,7 +70,7 @@
                             <center>
                                 <GridPane BorderPane.alignment="CENTER">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="65.0" minWidth="65.0" percentWidth="0.0" prefWidth="65.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" percentWidth="0.0" prefWidth="80.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="133.0" />
                                     </columnConstraints>
                                     <rowConstraints>
@@ -79,6 +79,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="width:" />
@@ -91,6 +92,8 @@
                                         <Text fx:id="bitDepthText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <Text fx:id="channelsText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                         <Text fx:id="sizeText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="unique colors:" GridPane.rowIndex="5" />
+                              <Text fx:id="uniqueColorsText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     </children>
                                 </GridPane>
                             </center>

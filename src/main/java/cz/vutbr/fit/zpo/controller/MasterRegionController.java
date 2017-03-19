@@ -58,6 +58,8 @@ public class MasterRegionController extends Controller {
     public Text channelsText;
     @FXML
     public Text sizeText;
+    @FXML
+    public Text uniqueColorsText;
 
 
     /* Pixel information pane */
@@ -159,12 +161,14 @@ public class MasterRegionController extends Controller {
             bitDepthText.setText("");
             channelsText.setText("");
             sizeText.setText("");
+            uniqueColorsText.setText("");
         } else {
             widthText.setText(String.valueOf(imageInformation.getWidth()) + " px");
             heightText.setText(String.valueOf(imageInformation.getHeight()) + " px");
             bitDepthText.setText(String.valueOf(imageInformation.getBitDepth()));
             channelsText.setText(String.valueOf(imageInformation.getChannelsCount()));
             sizeText.setText(String.valueOf((int) imageInformation.getSize()));
+            uniqueColorsText.setText(String.valueOf(imageInformation.getUniqueColors()));
         }
     }
 

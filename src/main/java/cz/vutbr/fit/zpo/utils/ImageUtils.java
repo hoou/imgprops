@@ -14,8 +14,8 @@ public class ImageUtils {
      * If number of channels of image is 1, return greyscale color. Otherwise return #000000.
      *
      * @param image image to get color of
-     * @param col x position of pixel to get color of
-     * @param row y position of pixel to get color of
+     * @param col   x position of pixel to get color of
+     * @param row   y position of pixel to get color of
      * @return color of pixel on position [col,row]
      */
     public static Color getColor(Mat image, int col, int row) {
@@ -40,6 +40,7 @@ public class ImageUtils {
 
     /**
      * Compute histogram for each channel individually.
+     *
      * @param image input image
      * @return list of data for each histogram
      */
@@ -69,13 +70,26 @@ public class ImageUtils {
         return allData;
     }
 
+    public static long countUniqueColors(Mat image) {
+        List<Color> listOfAllColors = new ArrayList<>();
+
+        for (int i = 0; i < image.rows(); i++) {
+            for (int j = 0; j < image.cols(); j++) {
+                listOfAllColors.add(getColor(image, j, i));
+            }
+        }
+
+        return listOfAllColors.stream().distinct().count();
+    }
+
     public static ImageInformation getImageInformation(Mat image) {
         int width = image.width();
         int height = image.height();
         int channelsCount = image.channels();
         int bitDepth = CvType.ELEM_SIZE(image.depth()) * 8 * channelsCount;
         double size = image.size().area();
-        return new ImageInformation(width, height, bitDepth, channelsCount, size);
+        long uniqueColors = countUniqueColors(image);
+        return new ImageInformation(width, height, bitDepth, channelsCount, size, uniqueColors);
     }
 
     public static List<Mat> splitImageByChannels(Mat image) {

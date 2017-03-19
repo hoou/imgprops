@@ -6,13 +6,15 @@ public class ImageInformation {
     private int bitDepth;
     private int channelsCount;
     private double size;
+    private long uniqueColors;
 
-    public ImageInformation(int width, int height, int bitDepth, int channelsCount, double size) {
+    public ImageInformation(int width, int height, int bitDepth, int channelsCount, double size, long uniqueColors) {
         this.width = width;
         this.height = height;
         this.bitDepth = bitDepth;
         this.channelsCount = channelsCount;
         this.size = size;
+        this.uniqueColors = uniqueColors;
     }
 
     public int getWidth() {
@@ -33,5 +35,9 @@ public class ImageInformation {
 
     public double getSize() {
         return size;
+    }
+
+    public long getUniqueColors() {
+        return uniqueColors;
     }
 }
