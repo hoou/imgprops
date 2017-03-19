@@ -5,6 +5,7 @@ import cz.vutbr.fit.zpo.utils.FileUtils;
 import cz.vutbr.fit.zpo.utils.ImageUtils;
 import cz.vutbr.fit.zpo.utils.Utils;
 import cz.vutbr.fit.zpo.view.ConfirmationDialog;
+import cz.vutbr.fit.zpo.view.InformationDialog;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -192,6 +193,11 @@ public class RootLayoutController extends Controller {
             }
         };
         confirmationDialog.show();
+    }
+
+    public void aboutHandler(ActionEvent actionEvent) {
+        InformationDialog dialog = new InformationDialog("About", "about text...");
+        dialog.show();
     }
 
     private class ImageLoadingService extends Service<Void> {
