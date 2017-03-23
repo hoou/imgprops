@@ -1,0 +1,166 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Ukázkový příklad dokumentace úkolu do předmětů IZP a IUS, 2010
+%%
+%% Upravená původní dokumentace od Davida Martinka.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt,a4paper,titlepage,final]{article}
+
+% cestina a fonty
+\usepackage[slovak]{babel}
+\usepackage[utf8]{inputenc}
+
+
+% balicky pro odkazy
+\usepackage[bookmarksopen,colorlinks,plainpages=false,urlcolor=blue,unicode]{hyperref}
+\usepackage{url}
+% obrazky
+\usepackage[dvipdf]{graphicx}
+\usepackage{amsmath}
+
+% velikost stranky
+\usepackage[top=3.5cm, left=2.5cm, text={17cm, 24cm}, ignorefoot]{geometry}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% titulní strana
+
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% změň následující údaje za své
+\def\myauthor{Tibor Mikita}
+%\def\mycoauthor{Samuel Jaklovský} 
+\def\myemail{xmikit01@stud.fit.vutbr.cz}
+%\def\mycoemail{xjaklo02@stud.fit.vutbr.cz}
+\def\projname{Program pre zobrazovanie\\vlastností obrazu}
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+\input{title.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% obsah
+\pagestyle{plain}
+\pagenumbering{roman}
+\setcounter{page}{1}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% textova zprava
+\newpage
+\pagestyle{plain}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Zloženie tímu} \label{Autori}
+Na tomto projekte pracovali, respektíve pracujú, respektíve ešte pracovať budú Tibor Mikita a Martin Matejčík.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Zadanie}
+Zadaním je vypracovať program, ktorý bude schopný zobrazovať rôzne údaje o načítanom obrázku.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Náš cieľ}\label{Ciel}
+Výsledkom tohto projektu bude aplikácia s grafickým uživateľským rozhraním, do ktorej bude možné nahrať ľubovoľný obrázok. Po načítaní obrázka do aplikácie sa, v uživateľsky prívetivom prostredí, zobrazia rôzne informácie. Budú to informácie týkajúce sa súboru ako takého, ale aj informácie súvisiace so samotným obrázkom, prípadne ďalšie informácie, ako je napríklad informácia o pixeli v mieste kurzora myši, histogram obrázka a iné.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Štúdium problematiky}
+Pri študovaní tejto problematiky sme sa zamerali hlavne na informácie, ktoré je možné vydolovať z obrázka prostredníctvom OpenCV knižnice. Jednotlivé zistenia sú popísané v nasledujúcich podkapitolách.
+\subsection{Podporované formáty obrázkov}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Rozdelenie práce v tíme}
+Martin:
+\begin{itemize}
+	\item základná štruktúra aplikácie podľa MVC modelu
+	\item prepojenie použitých technológií
+	\item rozdelenie obrázku na jednotlivé kanály a ich vzájomné zobrazovanie
+\end{itemize}
+Tibor:
+\begin{itemize}
+	\item načítanie obrázku zo súboru a získanie základných informácií o obrázku a o súbore ako takom
+	\item histogram
+	\item zobrazovanie informácií o pixele pod kurzom myši
+	\item nahromadenie testovacej sady obrázkov
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Použité technológie}
+\begin{itemize}
+	\item Java 8
+	\item JavaFX (GUI)
+	\item OpenCV 3.2 (práca s obrázkami)
+	\item Apache Tika Core (MIME typ)
+	\item JFoenix (material design)
+	\item Gradle (build system)
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Testovacie dáta}
+Testovacie dáta budú prirodzene pozostávať z rôznych obrázkov rôzného formátu(JPG, PNG, BMP) a veľkosti. Obrázky budú mať rôzny počet kanálov(RGB, RGBA, GrayScale). Súčasťou testovacej sady budú napríklad aj súbory bez prípony, alebo súbory s nesprávnou príponou, aby bolo možné otestovať MIME typ obrázka nezávisle na prípone v názve súbora.
+Testovacie dáta budú stiahnuté z nejakej voľne prístupnej databázy.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aktuálny stav}
+K dnešnému dátumu je hotové načítavanie obrázka a zobrazovanie týchto informácií:
+\begin{itemize}
+	\item informácie o súbore(názov, MIME typ, veľkosť v bytoch)
+	\item informácie o obrázku(šírka a výška v pixeloch, bitová hĺbka, počet kanálov, celkový počet pixelov)
+	\item informácie o pixele v mieste kurzora myši(x-ová a y-ová súradnica, farba v RGB)
+	\item histogram rozdelený podľa RGB zložiek(jednotlivé zložky je možné schovávať a znova zobrazovať)
+	\item !!! DOPLNIT !!!
+\end{itemize}
+\subsection{Screenshoty z aplikácie}
+
+\section{Problémy, na ktoré sme stihli naraziť}
+Funkcia \verb|imread()| s príznakom \verb|IMREAD_UNCHANGED| zhodí celý program, ak vstupom je 16-bitový \verb|tiff| súbor. Preto sme sa rozhodli vymeniť príznak \verb|IMREAD_UNCHANGED| za dvojicu príznakov \verb|CV_LOAD_IMAGE_ANYCOLOR| a \verb|CV_LOAD_IMAGE_ANYDEPTH|. Tým ale strácame informáciu o pôvodnom počte kanálov, pretože OpenCV pôvodný obrázok prekonvertuje do greyscale alebo RGB modelu a teda vždy pracujeme s jedným alebo troma 8-bitovými kanálmi. Pôvodná informácia o počte kanálov a bitovej hĺbke pre určité obrázky(napr. spomínaný 16-bitový \verb|tiff|) je teda nedostupná.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliografia
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{9}
+	
+	\bibitem{ref1}
+	Wikipedia:
+	\emph{Otto Wiener (physics)} [Online; cit. 25-02-2017].
+	\newline
+	URL 
+	\url{https://en.wikipedia.org/wiki/Otto_Wiener}
+	
+	\bibitem{ref2}
+	Wikipedia:
+	\emph{Dagerotypia} [Online; cit. 25-02-2017].
+	URL 
+	\url{https://sk.wikipedia.org/wiki/Dagerotypia}
+	
+	\bibitem{ref3}
+	Skullsinthestars:
+	\emph{Classic Science Paper: Otto Wiener's experiment (1890)} [Online; cit. 25-02-2017]. URL \url{https://skullsinthestars.com/2008/05/04/classic-science-paper-otto-wieners-experiment-1890/}
+	
+	\bibitem{ref4}
+	Wikipedia:
+	\emph{Světlo} [Online; cit. 25-02-2017].
+	URL
+	\url{https://cs.wikipedia.org/wiki/Sv%C4%9Btlo}
+		
+		\bibitem{ref5}
+		e-Fyzika I:
+		\emph{Interferencia koherentných vlnení postupujúcich proti sebe, stojaté vlnenie} [Online; cit. 25-02-2017].
+		URL \url{http://kf-lin.elf.stuba.sk/~ballo/STU_online/Fyzika%20I/VI%20kapitola/kmity-vlny2-5-2.htm}
+			
+			\bibitem{ref6}
+			Encyklopedie fyziky:
+			\emph{Odraz vlnění v řadě bodů, stojaté vlnění} [Online; cit. 25-02-2017].
+			URL
+			\url{http://fyzika.jreichl.com/main.article/view/168-odraz-vlneni-v-rade-bodu-stojate-vlneni
+			}
+			
+			
+		\end{thebibliography}
+\end{document}
