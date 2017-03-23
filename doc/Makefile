@@ -18,7 +18,7 @@ martinSettings:
 
 $(TIBOROUT).pdf $(MARTINOUT).pdf: clean
 	pdflatex -jobname=$(OUT) "\def\whos{$(WHOS)} \input{$(CO).tex}"
-  # bibtex $(CO)
+	bibtex $(OUT)
 	pdflatex -jobname=$(OUT) "\def\whos{$(WHOS)} \input{$(CO).tex}"
 	pdflatex -jobname=$(OUT) "\def\whos{$(WHOS)} \input{$(CO).tex}"
 
