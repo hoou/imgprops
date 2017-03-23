@@ -26,6 +26,9 @@
 
 \begin{document}
 	
+\newcommand\pro{\item[$+$]}
+\newcommand\con{\item[$-$]}
+	
 \newcommand{\defauthor}[3]{
 	\expandafter\newcommand\csname #1-name\endcsname{#2}
 	\expandafter\newcommand\csname #1-email\endcsname{#3}
@@ -87,6 +90,20 @@ Výsledkom tohto projektu bude aplikácia s grafickým uživateľským rozhraní
 \input{\whos.tex}
 \fi
 
+\subsection{Testovacie dáta}
+Testovacie dáta budú prirodzene pozostávať z rôznych obrázkov rôzného formátu(JPG, PNG, BMP) a veľkosti. Obrázky budú mať rôzny počet kanálov(RGB, RGBA, GrayScale). Súčasťou testovacej sady budú napríklad aj súbory bez prípony, alebo súbory s nesprávnou príponou, aby bolo možné otestovať MIME typ obrázka nezávisle na prípone v názve súbora.
+Testovacie dáta budú stiahnuté z nejakej voľne prístupnej databázy.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Použité technológie}
+\begin{itemize}
+	\item Java 8
+	\item JavaFX - GUI
+	\item OpenCV 3.2.0 (packaged by OpenPnP) - práca s obrázkami
+	\item Apache Tika Core - MIME typ
+	\item JFoenix - material design
+	\item Gradle - build system
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Rozdelenie práce v tíme}
@@ -103,22 +120,6 @@ Tibor:
 	\item zobrazovanie informácií o pixele pod kurzom myši
 	\item nahromadenie testovacej sady obrázkov
 \end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Použité technológie}
-\begin{itemize}
-	\item Java 8
-	\item JavaFX (GUI)
-	\item OpenCV 3.2 (práca s obrázkami)
-	\item Apache Tika Core (MIME typ)
-	\item JFoenix (material design)
-	\item Gradle (build system)
-\end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Testovacie dáta}
-Testovacie dáta budú prirodzene pozostávať z rôznych obrázkov rôzného formátu(JPG, PNG, BMP) a veľkosti. Obrázky budú mať rôzny počet kanálov(RGB, RGBA, GrayScale). Súčasťou testovacej sady budú napríklad aj súbory bez prípony, alebo súbory s nesprávnou príponou, aby bolo možné otestovať MIME typ obrázka nezávisle na prípone v názve súbora.
-Testovacie dáta budú stiahnuté z nejakej voľne prístupnej databázy.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Aktuálny stav}

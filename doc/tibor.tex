@@ -1,3 +1,64 @@
-Pri študovaní tejto problematiky sme sa zamerali hlavne na informácie, ktoré je možné vydolovať z obrázka prostredníctvom OpenCV knižnice. Jednotlivé zistenia sú popísané v nasledujúcich podkapitolách.
+\subsection{Dostupné technológie}
+Rozhodli sme sa navrhnutú aplikáciu implementovať v jazyku Java. Existuje niekoľko spôsobov ako v Jave pracovať s OpenCV knižnicou. Najvhodnejšími kanditámi sú:
+\begin{itemize}
+	\item JavaCV
+		\begin{itemize}
+			\pro rozhranie pre OpenCV napísané v Jave
+			\pro zahrňuje množstvo knižníc z oblasti počítačového videnia
+			\con odlišné názvy funkcií od OpenCV
+			\con horšia dokumentácia
+		\end{itemize}
+	\item OpenCV packaged by OpenPnP
+		\begin{itemize}
+			\pro práca s natívnou knižnicou OpenCV priamo v Jave (Java bindings)
+			\pro chválitebná dokumentácia a množstvo príkladov
+			\con \uv{len} OpenCV funkcie
+		\end{itemize}
+\end{itemize}
+
+Pre získanie MIME typu súboru v Jave, bez ohľadu na príponu, je možné využiť niekoľko metód. Ako najspoľahlivejšie sa zdajú byť tieto:
+\begin{itemize}
+	\item jMimeMagic
+	\begin{itemize}
+		\pro spoľahlivé
+		\pro jednoduché použitie
+		\con otravné \uv{warning} oznamenia pri spustení
+		\con nepodporuje TIFF formát
+	\end{itemize}
+	\item Apache Tika
+	\begin{itemize}
+		\pro mocný nástroj
+		\pro dobrá podpora
+		\pro vie to rozoznať tisíce rôznych formátov(aj TIFF!)
+	\end{itemize}
+\end{itemize}
+
 \subsection{Informácie, ktoré je možné získať}
+\begin{itemize}
+	\item súbor
+	\begin{itemize}
+		\item názov
+		\item MIME typ
+		\item veľkosť
+	\end{itemize}
+	\item obrázok
+	\begin{itemize}
+		\item šírka a výška v pixeloch
+		\item bitová hĺbka
+		\item počet kanálov
+		\item počet unikátnych farieb
+	\end{itemize}
+	\item pixel
+	\begin{itemize}
+		\item pozícia v obrázku
+		\item farba, resp. intenzita
+	\end{itemize}
+	\item rôzne
+	\begin{itemize}
+		\item histogram
+		\item rozdelenie obrázka na jednotlivé kanály
+	\end{itemize}
+\end{itemize}
+
 \subsection{Podporované formáty obrázkov}
+Naša aplikácia bude určite podporovať tieto formáty obrázkov: BMP, JPG, PNG, TIFF. Zistil som, že OpenCV nevie pracovať s GIF, tým pádom ani naša aplikácia to nebude podporovať.
