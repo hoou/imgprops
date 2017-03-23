@@ -141,8 +141,19 @@ Toto sme už stihli implementovať:
 	
 \end{itemize}
 \subsection{Screenshoty z aplikácie}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{img/screenshot1.jpeg}
+	\caption{Základné informácie}
+\end{figure}
 
-\section{Problémy, na ktoré sme stihli naraziť}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{img/screenshot2.jpeg}
+	\caption{Ukážka histogramu}
+\end{figure}
+
+\subsection{Problémy, na ktoré sme stihli naraziť}
 Funkcia \verb|imread()| s príznakom \verb|IMREAD_UNCHANGED| zhodí celý program, ak vstupom je 16-bitový \verb|tiff| súbor. Preto sme sa rozhodli vymeniť príznak \verb|IMREAD_UNCHANGED| za dvojicu príznakov \verb|CV_LOAD_IMAGE_ANYCOLOR| a \verb|CV_LOAD_IMAGE_ANYDEPTH|. Tým ale strácame informáciu o pôvodnom počte kanálov, pretože OpenCV pôvodný obrázok prekonvertuje do greyscale alebo RGB modelu a teda vždy pracujeme s jedným alebo troma 8-bitovými kanálmi. Pôvodná informácia o počte kanálov a bitovej hĺbke pre určité obrázky(napr. spomínaný 16-bitový \verb|tiff|) je teda nedostupná.
 
 \newpage
