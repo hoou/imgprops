@@ -1,25 +1,28 @@
 CO=doc
+MARTINOUT=martin
+TIBOROUT=tibor
 
-all: $(CO).pdf
+all: tibor martin
 
-pdf: $(CO).pdf
+tibor: tiborSettings $(TIBOROUT).pdf
 
-$(CO).ps: $(CO).dvi
-	dvips $(CO)
+martin: martinSettings $(MARTINOUT).pdf
 
-$(CO).pdf: clean
-	pdflatex $(CO)
-	bibtex $(CO)
-	pdflatex $(CO)
-	pdflatex $(CO)
+tiborSettings:
+	$(eval OUT=$(TIBOROUT))
+	$(eval WHOS=tibor)
 
-$(CO).dvi: $(CO).tex $(CO).bib
-	latex $(CO)
-	bibtex $(CO)
-	latex $(CO)
-	latex $(CO)
+martinSettings:
+	$(eval OUT=$(MARTINOUT))
+	$(eval WHOS=martin)
+
+$(TIBOROUT).pdf $(MARTINOUT).pdf: clean
+	pdflatex -jobname=$(OUT) "\def\whos{$(WHOS)} \input{$(CO).tex}"
+  # bibtex $(CO)
+	pdflatex -jobname=$(OUT) "\def\whos{$(WHOS)} \input{$(CO).tex}"
+	pdflatex -jobname=$(OUT) "\def\whos{$(WHOS)} \input{$(CO).tex}"
 
 clean:
-	rm -f *.dvi *.log $(CO).blg $(CO).bbl $(CO).toc *.aux $(CO).out $(CO).lof $(CO).ptc
-	rm -f $(CO).pdf
+	rm -f *.dvi *.log *.aux $(MARTINOUT).blg $(MARTINOUT).bbl $(MARTINOUT).toc $(MARTINOUT).out $(MARTINOUT).lof $(MARTINOUT).ptc $(TIBOROUT).blg $(TIBOROUT).bbl $(TIBOROUT).toc $(TIBOROUT).out $(TIBOROUT).lof $(TIBOROUT).ptc
+	rm -f $(MARTINOUT).pdf $(TIBOROUT).pdf
 	rm -f *~

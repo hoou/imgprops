@@ -11,6 +11,7 @@
 % cestina a fonty
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{etoolbox}
 
 
 % balicky pro odkazy
@@ -24,16 +25,30 @@
 \usepackage[top=3.5cm, left=2.5cm, text={17cm, 24cm}, ignorefoot]{geometry}
 
 \begin{document}
+	
+\newcommand{\defauthor}[3]{
+	\expandafter\newcommand\csname #1-name\endcsname{#2}
+	\expandafter\newcommand\csname #1-email\endcsname{#3}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % titulní strana
 
-% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-% změň následující údaje za své
-\def\myauthor{Tibor Mikita}
-%\def\mycoauthor{Samuel Jaklovský} 
-\def\myemail{xmikit01@stud.fit.vutbr.cz}
-%\def\mycoemail{xjaklo02@stud.fit.vutbr.cz}
+% default author
+\def\defaultauthor{tibor}
+
+% mena autorov
+\defauthor{tibor}{Tibor Mikita}{xmikit01@stud.fit.vutbr.cz}
+\defauthor{martin}{Martin Matejčík}{xmatej46@stud.fit.vutbr.cz}
+
+\ifdefined\whos
+\else
+\def\whos{\defaultauthor}
+\fi
+
+\def\myauthor{\csname\whos-name\endcsname}
+\def\myemail{\csname\whos-email\endcsname}
+
 \def\projname{Program pre zobrazovanie\\vlastností obrazu}
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -68,8 +83,9 @@ Výsledkom tohto projektu bude aplikácia s grafickým uživateľským rozhraní
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Štúdium problematiky}
-Pri študovaní tejto problematiky sme sa zamerali hlavne na informácie, ktoré je možné vydolovať z obrázka prostredníctvom OpenCV knižnice. Jednotlivé zistenia sú popísané v nasledujúcich podkapitolách.
-\subsection{Podporované formáty obrázkov}
+\ifdefined\whos
+\input{\whos.tex}
+\fi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,43 +140,43 @@ Funkcia \verb|imread()| s príznakom \verb|IMREAD_UNCHANGED| zhodí celý progra
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliografia
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{thebibliography}{9}
-	
-	\bibitem{ref1}
-	Wikipedia:
-	\emph{Otto Wiener (physics)} [Online; cit. 25-02-2017].
-	\newline
-	URL 
-	\url{https://en.wikipedia.org/wiki/Otto_Wiener}
-	
-	\bibitem{ref2}
-	Wikipedia:
-	\emph{Dagerotypia} [Online; cit. 25-02-2017].
-	URL 
-	\url{https://sk.wikipedia.org/wiki/Dagerotypia}
-	
-	\bibitem{ref3}
-	Skullsinthestars:
-	\emph{Classic Science Paper: Otto Wiener's experiment (1890)} [Online; cit. 25-02-2017]. URL \url{https://skullsinthestars.com/2008/05/04/classic-science-paper-otto-wieners-experiment-1890/}
-	
-	\bibitem{ref4}
-	Wikipedia:
-	\emph{Světlo} [Online; cit. 25-02-2017].
-	URL
-	\url{https://cs.wikipedia.org/wiki/Sv%C4%9Btlo}
-		
-		\bibitem{ref5}
-		e-Fyzika I:
-		\emph{Interferencia koherentných vlnení postupujúcich proti sebe, stojaté vlnenie} [Online; cit. 25-02-2017].
-		URL \url{http://kf-lin.elf.stuba.sk/~ballo/STU_online/Fyzika%20I/VI%20kapitola/kmity-vlny2-5-2.htm}
-			
-			\bibitem{ref6}
-			Encyklopedie fyziky:
-			\emph{Odraz vlnění v řadě bodů, stojaté vlnění} [Online; cit. 25-02-2017].
-			URL
-			\url{http://fyzika.jreichl.com/main.article/view/168-odraz-vlneni-v-rade-bodu-stojate-vlneni
-			}
-			
-			
-		\end{thebibliography}
+%\begin{thebibliography}{9}
+%	
+%	\bibitem{ref1}
+%	Wikipedia:
+%	\emph{Otto Wiener (physics)} [Online; cit. 25-02-2017].
+%	\newline
+%	URL 
+%	\url{https://en.wikipedia.org/wiki/Otto_Wiener}
+%	
+%	\bibitem{ref2}
+%	Wikipedia:
+%	\emph{Dagerotypia} [Online; cit. 25-02-2017].
+%	URL 
+%	\url{https://sk.wikipedia.org/wiki/Dagerotypia}
+%	
+%	\bibitem{ref3}
+%	Skullsinthestars:
+%	\emph{Classic Science Paper: Otto Wiener's experiment (1890)} [Online; cit. 25-02-2017]. URL \url{https://skullsinthestars.com/2008/05/04/classic-science-paper-otto-wieners-experiment-1890/}
+%	
+%	\bibitem{ref4}
+%	Wikipedia:
+%	\emph{Světlo} [Online; cit. 25-02-2017].
+%	URL
+%	\url{https://cs.wikipedia.org/wiki/Sv%C4%9Btlo}
+%		
+%		\bibitem{ref5}
+%		e-Fyzika I:
+%		\emph{Interferencia koherentných vlnení postupujúcich proti sebe, stojaté vlnenie} [Online; cit. 25-02-2017].
+%		URL \url{http://kf-lin.elf.stuba.sk/~ballo/STU_online/Fyzika%20I/VI%20kapitola/kmity-vlny2-5-2.htm}
+%			
+%			\bibitem{ref6}
+%			Encyklopedie fyziky:
+%			\emph{Odraz vlnění v řadě bodů, stojaté vlnění} [Online; cit. 25-02-2017].
+%			URL
+%			\url{http://fyzika.jreichl.com/main.article/view/168-odraz-vlneni-v-rade-bodu-stojate-vlneni
+%			}
+%			
+%			
+%		\end{thebibliography}
 \end{document}
