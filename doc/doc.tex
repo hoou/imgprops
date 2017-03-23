@@ -82,7 +82,7 @@ Zadaním je vypracovať program, ktorý bude schopný zobrazovať rôzne údaje 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Náš cieľ}\label{Ciel}
-Výsledkom tohto projektu bude aplikácia s grafickým uživateľským rozhraním, do ktorej bude možné nahrať ľubovoľný obrázok. Po načítaní obrázka do aplikácie sa, v uživateľsky prívetivom prostredí, zobrazia rôzne informácie. Budú to informácie týkajúce sa súboru ako takého, ale aj informácie súvisiace so samotným obrázkom, prípadne ďalšie informácie, ako je napríklad informácia o pixeli v mieste kurzora myši, histogram obrázka a iné.
+Výsledkom tohto projektu bude aplikácia s grafickým užívateľským rozhraním, do ktorej bude možné nahrať ľubovoľný obrázok. Po načítaní obrázka do aplikácie sa, v užívateľsky prívetivom prostredí, zobrazia rôzne informácie. Budú to informácie týkajúce sa súboru ako takého, ale aj informácie súvisiace so samotným obrázkom, prípadne ďalšie informácie, ako je napríklad informácia o pixeli v mieste kurzora myši, histogram obrázka a iné.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Štúdium problematiky}
@@ -91,7 +91,7 @@ Výsledkom tohto projektu bude aplikácia s grafickým uživateľským rozhraní
 \fi
 
 \subsection{Testovacie dáta}
-Testovacie dáta budú prirodzene pozostávať z rôznych obrázkov rôzného formátu(JPG, PNG, BMP) a veľkosti. Obrázky budú mať rôzny počet kanálov(RGB, RGBA, GrayScale). Súčasťou testovacej sady budú napríklad aj súbory bez prípony, alebo súbory s nesprávnou príponou, aby bolo možné otestovať MIME typ obrázka nezávisle na prípone v názve súbora.
+Testovacie dáta budú prirodzene pozostávať z rôznych obrázkov rôzneho formátu(JPG, PNG, BMP) a veľkosti. Obrázky budú mať rôzny počet kanálov(RGB, RGBA, GrayScale). Súčasťou testovacej sady budú napríklad aj súbory bez prípony, alebo súbory s nesprávnou príponou, aby bolo možné otestovať MIME typ obrázka nezávisle na prípone v názve súboru.
 Testovacie dáta budú stiahnuté z nejakej voľne prístupnej databázy.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -117,8 +117,8 @@ Tibor:
 \begin{itemize}
 	\item načítanie obrázku zo súboru a získanie základných informácií o obrázku a o súbore ako takom
 	\item histogram
-	\item zobrazovanie informácií o pixele pod kurzom myši
-	\item nahromadenie testovacej sady obrázkov
+	\item zobrazovanie informácií o pixeli pod kurzom myši
+	\item zhromaždenie testovacej sady obrázkov
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -129,10 +129,10 @@ Toto sme už stihli implementovať:
 		\begin{itemize}
 			\item o súbore(názov, MIME typ, veľkosť v bytoch)
 			\item o obrázku(šírka a výška v pixeloch, bitová hĺbka, počet kanálov, celkový počet pixelov)
-			\item o pixele v mieste kurzora myši(x-ová a y-ová súradnica, farba v RGB, resp. intenzita)
+			\item o pixelei v mieste kurzora myši(x-ová a y-ová súradnica, farba v RGB, resp. intenzita)
 		\end{itemize}
 	\item histogram rozdelený podľa RGB zložiek(jednotlivé zložky je možné schovávať a znova zobrazovať)
-	\item zobrazovanie a schovávavanie jednotlivých farebných zložiek obrázku
+	\item zobrazovanie a schovávanie jednotlivých farebných zložiek obrázku
 	\item ďalšie možnosti prístupné cez menu
 		\begin{itemize}
 		\item znovuotvorenie nedávno otvorených obrázkov
