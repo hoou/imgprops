@@ -103,4 +103,42 @@ public class ImageUtils {
         Imgproc.cvtColor(im, greyscaleIm, Imgproc.COLOR_BGR2GRAY);
         return greyscaleIm;
     }
+
+    public static List<Double> calculateBrightnessProfileRowAverage(Mat im) {
+        Mat greyscale;
+        if (im.channels() != 1) {
+            greyscale = toGreyscale(im);
+        } else {
+            greyscale = im;
+        }
+
+        List<Double> result = new ArrayList<>();
+
+        for (int i = 0; i < greyscale.rows(); i++) {
+            Mat row = greyscale.row(i);
+            Scalar meanScalar = Core.mean(row);
+            result.add(meanScalar.val[0]);
+        }
+
+        return result;
+    }
+
+    public static List<Double> calculateBrightnessProfileColumnAverage(Mat im) {
+        Mat greyscale;
+        if (im.channels() != 1) {
+            greyscale = toGreyscale(im);
+        } else {
+            greyscale = im;
+        }
+
+        List<Double> result = new ArrayList<>();
+
+        for (int i = 0; i < greyscale.cols(); i++) {
+            Mat col = greyscale.col(i);
+            Scalar meanScalar = Core.mean(col);
+            result.add(meanScalar.val[0]);
+        }
+
+        return result;
+    }
 }

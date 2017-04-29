@@ -127,7 +127,7 @@ public class RootLayoutController extends Controller {
                         masterRegionController.currentProfileValues.clear();
                     }
                     if (c.wasAdded()) {
-                        List<Integer> tmp = new ArrayList<>();
+                        List<Number> tmp = new ArrayList<>();
                         tmp.addAll(c.getAddedSubList());
                         masterRegionController.currentProfileValues.add(masterRegionController.createSeries(tmp, "brightness"));
                     }
@@ -199,6 +199,8 @@ public class RootLayoutController extends Controller {
         /* Remove old image view */
         viewRegionController.removeImageView();
         masterRegionController.brightnessProfileCheckbox.setDisable(true);
+        masterRegionController.brightnessProfileRowAverageData.clear();
+        masterRegionController.brightnessProfileColumnAverageData.clear();
 
         Utils.showSpinner();
 
@@ -359,6 +361,9 @@ public class RootLayoutController extends Controller {
 
                 viewRegionController.setImageView(image);
                 masterRegionController.brightnessProfileCheckbox.setDisable(false);
+
+                masterRegionController.brightnessProfileRowAverageData.addAll(ImageUtils.calculateBrightnessProfileRowAverage(viewRegionController.getImageMat()));
+                masterRegionController.brightnessProfileColumnAverageData.addAll(ImageUtils.calculateBrightnessProfileColumnAverage(viewRegionController.getImageMat()));
 
                 if (viewRegionController.getImageMat().channels() == 3 || viewRegionController.getImageMat().channels() == 4) {
                     showChannelsCheckMenuItem.setDisable(false);

@@ -7,6 +7,7 @@ import cz.vutbr.fit.zpo.dto.ImageInformation;
 import cz.vutbr.fit.zpo.utils.ImageUtils;
 import cz.vutbr.fit.zpo.utils.Utils;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -101,6 +102,30 @@ public class MasterRegionController extends Controller {
     @FXML
     public NumberAxis profileLineLengthAxis;
 
+    /* Brightness profile row average pane */
+    @FXML
+    public BorderPane brightnessProfileRowAveragePane;
+    @FXML
+    public AreaChart<Number, Number> brightnessProfileRowAverageAreaChart;
+    @FXML
+    public NumberAxis profileRowAverageLengthAxis;
+    @FXML
+    public NumberAxis brightnessValuesRowAverageAxis;
+
+    /* Brightness profile column average pane */
+    @FXML
+    public BorderPane brightnessProfileColumnAveragePane;
+    @FXML
+    public AreaChart<Number, Number> brightnessProfileColumnAverageAreaChart;
+    @FXML
+    public NumberAxis profileColumnAverageLengthAxis;
+    @FXML
+    public NumberAxis brightnessValuesColumnAverageAxis;
+    ObservableList<XYChart.Series<Number, Number>> currentProfileValues = FXCollections.observableArrayList();
+    ObservableList<Double> brightnessProfileRowAverageData = FXCollections.observableArrayList();
+    ObservableList<Double> brightnessProfileColumnAverageData = FXCollections.observableArrayList();
+    ObservableList<XYChart.Series<Number, Number>> rowAverageProfileValues = FXCollections.observableArrayList();
+    ObservableList<XYChart.Series<Number, Number>> columnAverageProfileValues = FXCollections.observableArrayList();
     /* File information pane private members */
     private Tooltip nameTooltip = new Tooltip();
     @FXML
@@ -113,7 +138,6 @@ public class MasterRegionController extends Controller {
     private Map<String, List<Integer>> allHistogramValues = new LinkedHashMap<>();
     private ObservableList<XYChart.Series<Number, Number>> shownHistogramValues = FXCollections.observableArrayList();
     private List<Text> pixelColorTexts = new ArrayList<>();
-    ObservableList<XYChart.Series<Number, Number>> currentProfileValues = FXCollections.observableArrayList();
 
     /* ***********************************************************************
      *                                 Methods                               *
@@ -137,6 +161,23 @@ public class MasterRegionController extends Controller {
         brightnessValuesAxis.setUpperBound(255);
         brightnessValuesAxis.setTickUnit(20);
 
+        addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileRowAverageData, rowAverageProfileValues);
+        addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileColumnAverageData, columnAverageProfileValues);
+
+        brightnessProfileRowAverageAreaChart.setData(rowAverageProfileValues);
+        brightnessProfileRowAverageAreaChart.setLegendVisible(false);
+        brightnessValuesRowAverageAxis.setAutoRanging(false);
+        brightnessValuesRowAverageAxis.setLowerBound(0);
+        brightnessValuesRowAverageAxis.setUpperBound(255);
+        brightnessValuesRowAverageAxis.setTickUnit(20);
+
+        brightnessProfileColumnAverageAreaChart.setData(columnAverageProfileValues);
+        brightnessProfileColumnAverageAreaChart.setLegendVisible(false);
+        brightnessValuesColumnAverageAxis.setAutoRanging(false);
+        brightnessValuesColumnAverageAxis.setLowerBound(0);
+        brightnessValuesColumnAverageAxis.setUpperBound(255);
+        brightnessValuesColumnAverageAxis.setTickUnit(20);
+
         /* Clear selection when disabled */
         brightnessProfileCheckbox.disableProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -153,6 +194,21 @@ public class MasterRegionController extends Controller {
     @Override
     public void onStop() {
 
+    }
+
+    private void addListenerToChangeSeriesOnChangeAverageProfileData(ObservableList<Double> data, ObservableList<XYChart.Series<Number, Number>> listOfSeries) {
+        data.addListener((ListChangeListener<Double>) c -> {
+            while (c.next()) {
+                if (c.wasRemoved()) {
+                    listOfSeries.clear();
+                }
+                if (c.wasAdded()) {
+                    List<Number> tmp = new ArrayList<>();
+                    tmp.addAll(c.getAddedSubList());
+                    listOfSeries.add(createSeries(tmp, "brightness"));
+                }
+            }
+        });
     }
 
 
@@ -302,7 +358,7 @@ public class MasterRegionController extends Controller {
         return areaChart;
     }
 
-    XYChart.Series<Number, Number> createSeries(List<Integer> data, String name) {
+    XYChart.Series<Number, Number> createSeries(List<Number> data, String name) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName(name);
         for (int i = 0; i < data.size(); i++) {
@@ -370,7 +426,7 @@ public class MasterRegionController extends Controller {
         if (!visible) {
             shownHistogramValues.add(createSeries(new ArrayList<>(), name));
         } else {
-            shownHistogramValues.add(createSeries(allHistogramValues.get(name), name));
+            shownHistogramValues.add(createSeries(new ArrayList<>(allHistogramValues.get(name)), name));
         }
     }
 
