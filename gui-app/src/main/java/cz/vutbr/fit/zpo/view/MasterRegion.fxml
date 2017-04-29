@@ -299,6 +299,56 @@
                         </AreaChart>
                      </bottom>
                   </BorderPane>
+                  <BorderPane fx:id="brightnessProfileRowAverageDiffPane" style="-fx-border-width: 1; -fx-border-color: #dfdfdf;">
+                     <top>
+                        <Text fill="#9f9f9f" text="Brightness profile - row average (differentiated)" textAlignment="CENTER" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" />
+                           </BorderPane.margin>
+                        </Text>
+                     </top>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <bottom>
+                        <AreaChart fx:id="brightnessProfileRowAverageDiffAreaChart" animated="false" BorderPane.alignment="CENTER">
+                           <xAxis>
+                              <NumberAxis fx:id="profileRowAverageDiffLengthAxis" side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="brightnessValuesRowAverageDiffAxis" side="LEFT" />
+                           </yAxis>
+                        </AreaChart>
+                     </bottom>
+                  </BorderPane>
+                  <BorderPane fx:id="brightnessProfileColumnAverageDiffPane" style="-fx-border-width: 1; -fx-border-color: #dfdfdf;">
+                     <top>
+                        <Text fill="#9f9f9f" text="Brightness profile - column average (differentiated)" textAlignment="CENTER" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" />
+                           </BorderPane.margin>
+                        </Text>
+                     </top>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <bottom>
+                        <AreaChart fx:id="brightnessProfileColumnAverageDiffAreaChart" animated="false" BorderPane.alignment="CENTER">
+                           <xAxis>
+                              <NumberAxis fx:id="profileColumnAverageDiffLengthAxis" side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="brightnessValuesColumnAverageDiffAxis" side="LEFT" />
+                           </yAxis>
+                        </AreaChart>
+                     </bottom>
+                  </BorderPane>
                     </children>
                 </VBox>
             </children>

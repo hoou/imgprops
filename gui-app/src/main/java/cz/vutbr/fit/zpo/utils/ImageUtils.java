@@ -8,6 +8,9 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.opencv.core.Core.BORDER_DEFAULT;
+import static org.opencv.core.CvType.CV_16S;
+
 public class ImageUtils {
     /**
      * Get color of image. If number of channels of image is 3 or 4, return RGB color.
@@ -138,6 +141,45 @@ public class ImageUtils {
             Scalar meanScalar = Core.mean(col);
             result.add(meanScalar.val[0]);
         }
+
+        return result;
+    }
+
+    public static List<Double> calculateBrightnessProfileRowAverageDiff(Mat im) {
+        Mat sobel = sobelOperator(im);
+        return calculateBrightnessProfileRowAverage(sobel);
+    }
+
+    public static List<Double> calculateBrightnessProfileColumnAverageDiff(Mat im) {
+        Mat sobel = sobelOperator(im);
+        return calculateBrightnessProfileColumnAverage(sobel);
+    }
+
+    public static Mat sobelOperator(Mat im) {
+        Mat greyscale;
+        Mat result = new Mat();
+        if (im.channels() != 1) {
+            greyscale = toGreyscale(im);
+        } else {
+            greyscale = im;
+        }
+
+        /* http://docs.opencv.org/2.4/doc/tutorials/imgproc/imgtrans/sobel_derivatives/sobel_derivatives.html */
+        Mat gradientX = new Mat();
+        Mat gradientY = new Mat();
+        Mat absGradientX = new Mat();
+        Mat absGradientY = new Mat();
+
+        /* Gradient X */
+        Imgproc.Sobel(greyscale, gradientX, CV_16S, 1, 0, 3, 1, 0, BORDER_DEFAULT);
+
+        /* Gradient Y */
+        Imgproc.Sobel(greyscale, gradientY, CV_16S, 0, 1, 3, 1, 0, BORDER_DEFAULT);
+
+        Core.convertScaleAbs(gradientX, absGradientX);
+        Core.convertScaleAbs(gradientY, absGradientY);
+
+        Core.addWeighted(absGradientX, 0.5, absGradientY, 0.5, 0, result);
 
         return result;
     }

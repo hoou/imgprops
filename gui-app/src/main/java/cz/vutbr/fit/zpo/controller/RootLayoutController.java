@@ -119,18 +119,15 @@ public class RootLayoutController extends Controller {
 
         viewRegionController.viewPane.setOnMouseClicked(event -> openImageHandler());
 
-        viewRegionController.profileData.addListener(new ListChangeListener<Integer>() {
-            @Override
-            public void onChanged(Change<? extends Integer> c) {
-                while (c.next()) {
-                    if (c.wasRemoved()) {
-                        masterRegionController.currentProfileValues.clear();
-                    }
-                    if (c.wasAdded()) {
-                        List<Number> tmp = new ArrayList<>();
-                        tmp.addAll(c.getAddedSubList());
-                        masterRegionController.currentProfileValues.add(masterRegionController.createSeries(tmp, "brightness"));
-                    }
+        viewRegionController.profileData.addListener((ListChangeListener<Integer>) c -> {
+            while (c.next()) {
+                if (c.wasRemoved()) {
+                    masterRegionController.currentProfileValues.clear();
+                }
+                if (c.wasAdded()) {
+                    List<Number> tmp = new ArrayList<>();
+                    tmp.addAll(c.getAddedSubList());
+                    masterRegionController.currentProfileValues.add(masterRegionController.createSeries(tmp, "brightness"));
                 }
             }
         });
@@ -201,6 +198,8 @@ public class RootLayoutController extends Controller {
         masterRegionController.brightnessProfileCheckbox.setDisable(true);
         masterRegionController.brightnessProfileRowAverageData.clear();
         masterRegionController.brightnessProfileColumnAverageData.clear();
+        masterRegionController.brightnessProfileRowAverageDiffData.clear();
+        masterRegionController.brightnessProfileColumnAverageDiffData.clear();
 
         Utils.showSpinner();
 
@@ -364,6 +363,8 @@ public class RootLayoutController extends Controller {
 
                 masterRegionController.brightnessProfileRowAverageData.addAll(ImageUtils.calculateBrightnessProfileRowAverage(viewRegionController.getImageMat()));
                 masterRegionController.brightnessProfileColumnAverageData.addAll(ImageUtils.calculateBrightnessProfileColumnAverage(viewRegionController.getImageMat()));
+                masterRegionController.brightnessProfileRowAverageDiffData.addAll(ImageUtils.calculateBrightnessProfileRowAverageDiff(viewRegionController.getImageMat()));
+                masterRegionController.brightnessProfileColumnAverageDiffData.addAll(ImageUtils.calculateBrightnessProfileColumnAverageDiff(viewRegionController.getImageMat()));
 
                 if (viewRegionController.getImageMat().channels() == 3 || viewRegionController.getImageMat().channels() == 4) {
                     showChannelsCheckMenuItem.setDisable(false);

@@ -121,11 +121,37 @@ public class MasterRegionController extends Controller {
     public NumberAxis profileColumnAverageLengthAxis;
     @FXML
     public NumberAxis brightnessValuesColumnAverageAxis;
+
+    /* Brightness profile row average differentiated pane */
+    @FXML
+    public BorderPane brightnessProfileRowAverageDiffPane;
+    @FXML
+    public AreaChart<Number, Number> brightnessProfileRowAverageDiffAreaChart;
+    @FXML
+    public NumberAxis profileRowAverageDiffLengthAxis;
+    @FXML
+    public NumberAxis brightnessValuesRowAverageDiffAxis;
+
+    /* Brightness profile column average differentiated pane */
+    @FXML
+    public BorderPane brightnessProfileColumnAverageDiffPane;
+    @FXML
+    public AreaChart<Number, Number> brightnessProfileColumnAverageDiffAreaChart;
+    @FXML
+    public NumberAxis profileColumnAverageDiffLengthAxis;
+    @FXML
+    public NumberAxis brightnessValuesColumnAverageDiffAxis;
+
     ObservableList<XYChart.Series<Number, Number>> currentProfileValues = FXCollections.observableArrayList();
     ObservableList<Double> brightnessProfileRowAverageData = FXCollections.observableArrayList();
     ObservableList<Double> brightnessProfileColumnAverageData = FXCollections.observableArrayList();
-    ObservableList<XYChart.Series<Number, Number>> rowAverageProfileValues = FXCollections.observableArrayList();
-    ObservableList<XYChart.Series<Number, Number>> columnAverageProfileValues = FXCollections.observableArrayList();
+    ObservableList<Double> brightnessProfileRowAverageDiffData = FXCollections.observableArrayList();
+    ObservableList<Double> brightnessProfileColumnAverageDiffData = FXCollections.observableArrayList();
+    private ObservableList<XYChart.Series<Number, Number>> rowAverageProfileValues = FXCollections.observableArrayList();
+    private ObservableList<XYChart.Series<Number, Number>> columnAverageProfileValues = FXCollections.observableArrayList();
+    private ObservableList<XYChart.Series<Number, Number>> rowAverageDiffProfileValues = FXCollections.observableArrayList();
+    private ObservableList<XYChart.Series<Number, Number>> columnAverageDiffProfileValues = FXCollections.observableArrayList();
+
     /* File information pane private members */
     private Tooltip nameTooltip = new Tooltip();
     @FXML
@@ -163,6 +189,8 @@ public class MasterRegionController extends Controller {
 
         addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileRowAverageData, rowAverageProfileValues);
         addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileColumnAverageData, columnAverageProfileValues);
+        addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileRowAverageDiffData, rowAverageDiffProfileValues);
+        addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileColumnAverageDiffData, columnAverageDiffProfileValues);
 
         brightnessProfileRowAverageAreaChart.setData(rowAverageProfileValues);
         brightnessProfileRowAverageAreaChart.setLegendVisible(false);
@@ -177,6 +205,13 @@ public class MasterRegionController extends Controller {
         brightnessValuesColumnAverageAxis.setLowerBound(0);
         brightnessValuesColumnAverageAxis.setUpperBound(255);
         brightnessValuesColumnAverageAxis.setTickUnit(20);
+
+        brightnessProfileRowAverageDiffAreaChart.setData(rowAverageDiffProfileValues);
+        brightnessProfileRowAverageDiffAreaChart.setLegendVisible(false);
+
+        brightnessProfileColumnAverageDiffAreaChart.setData(columnAverageDiffProfileValues);
+        brightnessProfileColumnAverageDiffAreaChart.setLegendVisible(false);
+
 
         /* Clear selection when disabled */
         brightnessProfileCheckbox.disableProperty().addListener((observable, oldValue, newValue) -> {
@@ -437,7 +472,4 @@ public class MasterRegionController extends Controller {
     void showAllHistogramSeries() {
         allHistogramValues.forEach((name, seriesData) -> setHistogramSeriesVisible(name, true));
     }
-
-    /* ************************   Brightness profile pane   ************************* */
-
 }
