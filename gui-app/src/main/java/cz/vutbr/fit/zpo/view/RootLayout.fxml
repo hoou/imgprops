@@ -36,6 +36,11 @@
                         <CheckMenuItem fx:id="showPixelInformationCheckMenuItem" mnemonicParsing="false" selected="true" text="Show Pixel information" />
                         <CheckMenuItem fx:id="showChannelsCheckMenuItem" mnemonicParsing="false" selected="true" text="Show Channels" />
                         <CheckMenuItem fx:id="showHistogramCheckMenuItem" mnemonicParsing="false" selected="true" text="Show Histogram" />
+                        <CheckMenuItem fx:id="showBrightnessProfileCheckMenuItem" mnemonicParsing="false" selected="true" text="Show Brightness profile" />
+                        <CheckMenuItem fx:id="showBrightnessProfileRowAverageCheckMenuItem" mnemonicParsing="false" selected="true" text="Show Brightness profile - row average" />
+                        <CheckMenuItem fx:id="showBrightnessProfileColumnAverageCheckMenuItem" mnemonicParsing="false" selected="true" text="Show Brightness profile - column average" />
+                        <CheckMenuItem fx:id="showBrightnessProfileRowAverageDifferentiatedCheckMenuItem" mnemonicParsing="false" selected="true" text="Show Brightness profile - row average (differentiated)" />
+                        <CheckMenuItem fx:id="showBrightnessProfileColumnAverageDifferentiatedCheckMenuItem" mnemonicParsing="false" selected="true" text="Show Brightness profile - column average (differentiated)" />
                     </items>
                   </Menu>
                         <Menu mnemonicParsing="false" text="Help">
