@@ -7,8 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -30,9 +33,11 @@ public class ViewRegionController extends Controller {
     public StackPane viewImageStackPane;
 
     private ImageView imageView = new ImageView();
+    private AnchorPane drawingPane;
     private Mat imageMat;
     private List<Mat> channelPlanes;
     private PixelInformation lastPixelInformation;
+    private Rectangle profileRect;
 
     @Override
     public void onStart() {
@@ -126,11 +131,52 @@ public class ViewRegionController extends Controller {
         setImageView(OpenCvUtils.mat2Image(imageMat));
     }
 
-    void drawRows() {
-        System.out.println("Drawing rows");
+    void startDrawingRows() {
+        /* Remove old drawing pane */
+        viewImageStackPane.getChildren().remove(drawingPane);
+
+        drawingPane = new AnchorPane();
+        int imageCols = imageMat.cols();
+        int imageRows = imageMat.rows();
+
+        drawingPane.setMinWidth(imageCols);
+        drawingPane.setMaxWidth(imageCols);
+        drawingPane.setMinHeight(imageRows);
+        drawingPane.setMaxHeight(imageRows);
+        drawingPane.setOnMouseMoved(event -> {
+            drawingPane.getChildren().remove(profileRect);
+            profileRect = new Rectangle(0, event.getY(), imageCols, 1);
+            profileRect.setFill(Color.RED);
+            drawingPane.getChildren().add(profileRect);
+        });
+        drawingPane.setOnMouseExited(event -> drawingPane.getChildren().remove(profileRect));
+        viewImageStackPane.getChildren().add(drawingPane);
     }
 
-    void drawColumns() {
-        System.out.println("Drawing columns");
+    void startDrawingColumns() {
+        /* Remove old drawing pane */
+        viewImageStackPane.getChildren().remove(drawingPane);
+
+        drawingPane = new AnchorPane();
+        int imageCols = imageMat.cols();
+        int imageRows = imageMat.rows();
+
+        drawingPane.setMinWidth(imageCols);
+        drawingPane.setMaxWidth(imageCols);
+        drawingPane.setMinHeight(imageRows);
+        drawingPane.setMaxHeight(imageRows);
+        drawingPane.setOnMouseMoved(event -> {
+            drawingPane.getChildren().remove(profileRect);
+            profileRect = new Rectangle(event.getX(), 0, 1, imageRows);
+            profileRect.setFill(Color.RED);
+            drawingPane.getChildren().add(profileRect);
+        });
+        drawingPane.setOnMouseExited(event -> drawingPane.getChildren().remove(profileRect));
+        viewImageStackPane.getChildren().add(drawingPane);
+    }
+
+    void stopDrawingRowsAndCols() {
+        drawingPane.setOnMouseMoved(null);
+        viewImageStackPane.getChildren().remove(drawingPane);
     }
 }

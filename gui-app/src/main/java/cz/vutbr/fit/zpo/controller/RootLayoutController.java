@@ -18,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -90,13 +89,13 @@ public class RootLayoutController extends Controller {
 
         rowProfileToggleChangeListener = (observable, oldValue, newValue) -> {
             if (newValue) {
-                viewRegionController.drawRows();
+                viewRegionController.startDrawingRows();
             }
         };
 
         columnProfileToggleChangeListener = (observable, oldValue, newValue) -> {
             if (newValue) {
-                viewRegionController.drawColumns();
+                viewRegionController.startDrawingColumns();
             }
         };
 
@@ -105,21 +104,16 @@ public class RootLayoutController extends Controller {
                 masterRegionController.rowProfileToggle.selectedProperty().addListener(rowProfileToggleChangeListener);
                 masterRegionController.columnProfileToggle.selectedProperty().addListener(columnProfileToggleChangeListener);
                 if (masterRegionController.rowProfileToggle.selectedProperty().get()) {
-                    viewRegionController.drawRows();
+                    viewRegionController.startDrawingRows();
                 } else {
-                    viewRegionController.drawColumns();
+                    viewRegionController.startDrawingColumns();
                 }
             } else {
                 masterRegionController.rowProfileToggle.selectedProperty().removeListener(rowProfileToggleChangeListener);
                 masterRegionController.columnProfileToggle.selectedProperty().removeListener(columnProfileToggleChangeListener);
+                viewRegionController.stopDrawingRowsAndCols();
             }
         });
-
-        /* When image loaded, enable checkbox to turn on or off brightness profile */
-        viewRegionController.viewPane.centerProperty().addListener(
-                (observable, oldValue, newValue) ->
-                        masterRegionController.brightnessProfileCheckbox.setDisable(!(newValue instanceof ImageView))
-        );
 
         viewRegionController.viewPane.setOnMouseClicked(event -> openImageHandler());
     }
@@ -186,6 +180,7 @@ public class RootLayoutController extends Controller {
 
         /* Remove old image view */
         viewRegionController.removeImageView();
+        masterRegionController.brightnessProfileCheckbox.setDisable(true);
 
         Utils.showSpinner();
 
@@ -345,6 +340,7 @@ public class RootLayoutController extends Controller {
                 });
 
                 viewRegionController.setImageView(image);
+                masterRegionController.brightnessProfileCheckbox.setDisable(false);
 
                 if (viewRegionController.getImageMat().channels() == 3 || viewRegionController.getImageMat().channels() == 4) {
                     showChannelsCheckMenuItem.setDisable(false);
