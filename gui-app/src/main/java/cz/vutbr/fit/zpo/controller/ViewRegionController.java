@@ -3,6 +3,8 @@ package cz.vutbr.fit.zpo.controller;
 import cz.vutbr.fit.zpo.dto.PixelInformation;
 import cz.vutbr.fit.zpo.utils.ImageUtils;
 import cz.vutbr.fit.zpo.utils.OpenCvUtils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,6 +40,8 @@ public class ViewRegionController extends Controller {
     private List<Mat> channelPlanes;
     private PixelInformation lastPixelInformation;
     private Rectangle profileRect;
+
+    ObservableList<Integer> profileData = FXCollections.observableArrayList();
 
     @Override
     public void onStart() {
@@ -144,12 +148,21 @@ public class ViewRegionController extends Controller {
         drawingPane.setMinHeight(imageRows);
         drawingPane.setMaxHeight(imageRows);
         drawingPane.setOnMouseMoved(event -> {
+            if (event.getY() >= imageMat.rows())
+                return;
+
             drawingPane.getChildren().remove(profileRect);
             profileRect = new Rectangle(0, event.getY(), imageCols, 1);
             profileRect.setFill(Color.RED);
             drawingPane.getChildren().add(profileRect);
+
+            Mat selectedRow = imageMat.row((int) event.getY());
+            drawProfile(selectedRow);
         });
-        drawingPane.setOnMouseExited(event -> drawingPane.getChildren().remove(profileRect));
+        drawingPane.setOnMouseExited(event -> {
+            drawingPane.getChildren().remove(profileRect);
+            profileData.clear();
+        });
         viewImageStackPane.getChildren().add(drawingPane);
     }
 
@@ -166,17 +179,51 @@ public class ViewRegionController extends Controller {
         drawingPane.setMinHeight(imageRows);
         drawingPane.setMaxHeight(imageRows);
         drawingPane.setOnMouseMoved(event -> {
+            if (event.getX() >= imageMat.cols())
+                return;
+
             drawingPane.getChildren().remove(profileRect);
             profileRect = new Rectangle(event.getX(), 0, 1, imageRows);
             profileRect.setFill(Color.RED);
             drawingPane.getChildren().add(profileRect);
+
+            Mat selectedColumn = imageMat.col((int) event.getX());
+            drawProfile(selectedColumn);
         });
-        drawingPane.setOnMouseExited(event -> drawingPane.getChildren().remove(profileRect));
+        drawingPane.setOnMouseExited(event -> {
+            drawingPane.getChildren().remove(profileRect);
+            profileData.clear();
+        });
         viewImageStackPane.getChildren().add(drawingPane);
     }
 
     void stopDrawingRowsAndCols() {
         drawingPane.setOnMouseMoved(null);
         viewImageStackPane.getChildren().remove(drawingPane);
+    }
+
+    private void drawProfile(Mat line) {
+        Mat greyscale;
+
+        if (line.channels() != 1) {
+            greyscale = ImageUtils.toGreyscale(line);
+        } else {
+            greyscale = line;
+        }
+
+        profileData.clear();
+        if (greyscale.rows() == 1) {
+            List<Integer> tmp = new ArrayList<>();
+            for (int i = 0; i < greyscale.cols(); i++) {
+                tmp.add((int) greyscale.get(0, i)[0]);
+            }
+            profileData.addAll(tmp);
+        } else {
+            List<Integer> tmp = new ArrayList<>();
+            for (int i = 0; i < greyscale.rows(); i++) {
+                tmp.add((int) greyscale.get(i, 0)[0]);
+            }
+            profileData.addAll(tmp);
+        }
     }
 }

@@ -97,4 +97,10 @@ public class ImageUtils {
         Core.split(image, planes);
         return planes;
     }
+
+    public static Mat toGreyscale(Mat im) {
+        Mat greyscaleIm = new Mat();
+        Imgproc.cvtColor(im, greyscaleIm, Imgproc.COLOR_BGR2GRAY);
+        return greyscaleIm;
+    }
 }

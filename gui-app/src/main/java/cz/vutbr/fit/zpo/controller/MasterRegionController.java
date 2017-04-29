@@ -94,6 +94,12 @@ public class MasterRegionController extends Controller {
     public JFXRadioButton rowProfileToggle;
     @FXML
     public JFXRadioButton columnProfileToggle;
+    @FXML
+    public AreaChart<Number, Number> brightnessProfileAreaChart;
+    @FXML
+    public NumberAxis brightnessValuesAxis;
+    @FXML
+    public NumberAxis profileLineLengthAxis;
 
     /* File information pane private members */
     private Tooltip nameTooltip = new Tooltip();
@@ -107,6 +113,7 @@ public class MasterRegionController extends Controller {
     private Map<String, List<Integer>> allHistogramValues = new LinkedHashMap<>();
     private ObservableList<XYChart.Series<Number, Number>> shownHistogramValues = FXCollections.observableArrayList();
     private List<Text> pixelColorTexts = new ArrayList<>();
+    ObservableList<XYChart.Series<Number, Number>> currentProfileValues = FXCollections.observableArrayList();
 
     /* ***********************************************************************
      *                                 Methods                               *
@@ -122,6 +129,13 @@ public class MasterRegionController extends Controller {
         AreaChart<Number, Number> areaChart = createAreaChart();
         areaChart.setData(shownHistogramValues);
         histogramPane.setCenter(areaChart);
+
+        brightnessProfileAreaChart.setData(currentProfileValues);
+        brightnessProfileAreaChart.setLegendVisible(false);
+        brightnessValuesAxis.setAutoRanging(false);
+        brightnessValuesAxis.setLowerBound(0);
+        brightnessValuesAxis.setUpperBound(255);
+        brightnessValuesAxis.setTickUnit(20);
 
         /* Clear selection when disabled */
         brightnessProfileCheckbox.disableProperty().addListener((observable, oldValue, newValue) -> {
@@ -288,7 +302,7 @@ public class MasterRegionController extends Controller {
         return areaChart;
     }
 
-    private XYChart.Series<Number, Number> createSeries(List<Integer> data, String name) {
+    XYChart.Series<Number, Number> createSeries(List<Integer> data, String name) {
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName(name);
         for (int i = 0; i < data.size(); i++) {

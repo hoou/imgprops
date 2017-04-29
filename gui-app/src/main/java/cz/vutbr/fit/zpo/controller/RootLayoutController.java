@@ -12,6 +12,7 @@ import cz.vutbr.fit.zpo.view.InformationDialog;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -116,6 +118,22 @@ public class RootLayoutController extends Controller {
         });
 
         viewRegionController.viewPane.setOnMouseClicked(event -> openImageHandler());
+
+        viewRegionController.profileData.addListener(new ListChangeListener<Integer>() {
+            @Override
+            public void onChanged(Change<? extends Integer> c) {
+                while (c.next()) {
+                    if (c.wasRemoved()) {
+                        masterRegionController.currentProfileValues.clear();
+                    }
+                    if (c.wasAdded()) {
+                        List<Integer> tmp = new ArrayList<>();
+                        tmp.addAll(c.getAddedSubList());
+                        masterRegionController.currentProfileValues.add(masterRegionController.createSeries(tmp, "brightness"));
+                    }
+                }
+            }
+        });
     }
 
     private void setSplitPaneInitialDividerPosition() {

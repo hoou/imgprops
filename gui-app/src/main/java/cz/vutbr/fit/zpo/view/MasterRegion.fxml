@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.AreaChart?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -215,12 +214,12 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                      <bottom>
-                        <AreaChart fx:id="brightnessProfileAreaChart" BorderPane.alignment="CENTER">
+                        <AreaChart fx:id="brightnessProfileAreaChart" animated="false" BorderPane.alignment="CENTER">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <NumberAxis fx:id="profileLineLengthAxis" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis fx:id="brightnessValuesAxis" side="LEFT" />
                           </yAxis>
                         </AreaChart>
                      </bottom>
