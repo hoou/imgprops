@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -54,6 +55,9 @@ public class RootLayoutController extends Controller {
     @FXML
     private ViewRegionController viewRegionController;
 
+    private ChangeListener<Boolean> rowProfileToggleChangeListener;
+    private ChangeListener<Boolean> columnProfileToggleChangeListener;
+
     @Override
     public void onStart() {
         setSplitPaneInitialDividerPosition();
@@ -83,6 +87,39 @@ public class RootLayoutController extends Controller {
         masterRegionController.redChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
         masterRegionController.greenChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
         masterRegionController.blueChannelCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> toggleChannels());
+
+        rowProfileToggleChangeListener = (observable, oldValue, newValue) -> {
+            if (newValue) {
+                viewRegionController.drawRows();
+            }
+        };
+
+        columnProfileToggleChangeListener = (observable, oldValue, newValue) -> {
+            if (newValue) {
+                viewRegionController.drawColumns();
+            }
+        };
+
+        masterRegionController.brightnessProfileCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                masterRegionController.rowProfileToggle.selectedProperty().addListener(rowProfileToggleChangeListener);
+                masterRegionController.columnProfileToggle.selectedProperty().addListener(columnProfileToggleChangeListener);
+                if (masterRegionController.rowProfileToggle.selectedProperty().get()) {
+                    viewRegionController.drawRows();
+                } else {
+                    viewRegionController.drawColumns();
+                }
+            } else {
+                masterRegionController.rowProfileToggle.selectedProperty().removeListener(rowProfileToggleChangeListener);
+                masterRegionController.columnProfileToggle.selectedProperty().removeListener(columnProfileToggleChangeListener);
+            }
+        });
+
+        /* When image loaded, enable checkbox to turn on or off brightness profile */
+        viewRegionController.viewPane.centerProperty().addListener(
+                (observable, oldValue, newValue) ->
+                        masterRegionController.brightnessProfileCheckbox.setDisable(!(newValue instanceof ImageView))
+        );
 
         viewRegionController.viewPane.setOnMouseClicked(event -> openImageHandler());
     }

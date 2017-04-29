@@ -1,6 +1,7 @@
 package cz.vutbr.fit.zpo.controller;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXRadioButton;
 import cz.vutbr.fit.zpo.dto.FileInformation;
 import cz.vutbr.fit.zpo.dto.ImageInformation;
 import cz.vutbr.fit.zpo.utils.ImageUtils;
@@ -13,6 +14,7 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -38,20 +40,14 @@ public class MasterRegionController extends Controller {
     public BorderPane fileInformationPane;
     @FXML
     public Label nameText;
-    private Tooltip nameTooltip = new Tooltip();
     @FXML
     public Label mimeTypeText;
     @FXML
     public Label fileSizeText;
 
-
     /* Image information pane */
     @FXML
     public BorderPane imageInformationPane;
-    @FXML
-    private Text widthText;
-    @FXML
-    private Text heightText;
     @FXML
     public Text bitDepthText;
     @FXML
@@ -60,7 +56,6 @@ public class MasterRegionController extends Controller {
     public Text sizeText;
     @FXML
     public Text uniqueColorsText;
-
 
     /* Pixel information pane */
     @FXML
@@ -74,7 +69,6 @@ public class MasterRegionController extends Controller {
     @FXML
     public HBox pixelColorHbox;
 
-
     /* Channels pane */
     @FXML
     public BorderPane channelsPane;
@@ -85,12 +79,28 @@ public class MasterRegionController extends Controller {
     @FXML
     public JFXCheckBox blueChannelCheckbox;
 
-
     /* Histogram pane */
     @FXML
     public BorderPane histogramPane;
 
+    /* Brightness profile pane */
+    @FXML
+    public BorderPane brightnessProfilePane;
+    @FXML
+    public ToggleGroup brightnessProfileSelect;
+    @FXML
+    public JFXCheckBox brightnessProfileCheckbox;
+    @FXML
+    public JFXRadioButton rowProfileToggle;
+    @FXML
+    public JFXRadioButton columnProfileToggle;
 
+    /* File information pane private members */
+    private Tooltip nameTooltip = new Tooltip();
+    @FXML
+    private Text widthText;
+    @FXML
+    private Text heightText;
     /* ***********************************************************************
      *                              Member fields                            *
      *********************************************************************** */
@@ -112,6 +122,13 @@ public class MasterRegionController extends Controller {
         AreaChart<Number, Number> areaChart = createAreaChart();
         areaChart.setData(shownHistogramValues);
         histogramPane.setCenter(areaChart);
+
+        /* Clear selection when disabled */
+        brightnessProfileCheckbox.disableProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                brightnessProfileCheckbox.setSelected(false);
+            }
+        });
     }
 
     @Override
@@ -350,4 +367,7 @@ public class MasterRegionController extends Controller {
     void showAllHistogramSeries() {
         allHistogramValues.forEach((name, seriesData) -> setHistogramSeriesVisible(name, true));
     }
+
+    /* ************************   Brightness profile pane   ************************* */
+
 }

@@ -28,7 +28,7 @@ public class ViewRegionController extends Controller {
     public StackPane viewStackPane;
 
 
-    private ImageView imageView = new ImageView();
+    public ImageView imageView = new ImageView();
     private Mat imageMat;
     private List<Mat> channelPlanes;
     private PixelInformation lastPixelInformation;
@@ -120,5 +120,13 @@ public class ViewRegionController extends Controller {
 
         imageMat = mergedChannels;
         setImageView(OpenCvUtils.mat2Image(imageMat));
+    }
+
+    void drawRows() {
+        System.out.println("Drawing rows");
+    }
+
+    void drawColumns() {
+        System.out.println("Drawing columns");
     }
 }
