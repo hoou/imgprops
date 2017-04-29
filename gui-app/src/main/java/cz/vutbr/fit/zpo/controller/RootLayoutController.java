@@ -184,7 +184,8 @@ public class RootLayoutController extends Controller {
         masterRegionController.clearAllHistogramSeries();
         masterRegionController.removeHistogramCheckboxes();
 
-        viewRegionController.viewPane.setCenter(null);
+        /* Remove old image view */
+        viewRegionController.removeImageView();
 
         Utils.showSpinner();
 

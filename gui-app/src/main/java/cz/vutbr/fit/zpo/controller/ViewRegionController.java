@@ -26,9 +26,10 @@ public class ViewRegionController extends Controller {
     public Text clickHereText;
     @FXML
     public StackPane viewStackPane;
+    @FXML
+    public StackPane viewImageStackPane;
 
-
-    public ImageView imageView = new ImageView();
+    private ImageView imageView = new ImageView();
     private Mat imageMat;
     private List<Mat> channelPlanes;
     private PixelInformation lastPixelInformation;
@@ -69,8 +70,11 @@ public class ViewRegionController extends Controller {
         imageView.setFitWidth(imageMat.cols());
         imageView.setFitHeight(imageMat.rows());
         imageView.setImage(image);
-        viewPane.getChildren().remove(clickHereText);
-        viewPane.setCenter(imageView);
+        viewImageStackPane.getChildren().add(imageView);
+    }
+
+    void removeImageView() {
+        viewImageStackPane.getChildren().remove(imageView);
     }
 
     private void handleOnMouseMove(MouseEvent mouseEvent) {

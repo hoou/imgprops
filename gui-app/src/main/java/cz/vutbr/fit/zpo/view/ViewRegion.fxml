@@ -7,11 +7,15 @@
 
 <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vutbr.fit.zpo.controller.ViewRegionController">
     <children>
-      <StackPane fx:id="viewStackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" prefHeight="150.0" prefWidth="200.0">
+      <StackPane fx:id="viewStackPane" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <BorderPane fx:id="viewPane" prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <Text fx:id="clickHereText" strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to open image" BorderPane.alignment="CENTER" />
+                  <StackPane fx:id="viewImageStackPane" BorderPane.alignment="CENTER">
+                     <children>
+                        <Text fx:id="clickHereText" strokeType="OUTSIDE" strokeWidth="0.0" text="Click here to open image" />
+                     </children>
+                  </StackPane>
                </center>
             </BorderPane>
          </children>
