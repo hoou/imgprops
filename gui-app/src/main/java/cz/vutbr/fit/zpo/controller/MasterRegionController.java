@@ -142,15 +142,39 @@ public class MasterRegionController extends Controller {
     @FXML
     public NumberAxis brightnessValuesColumnAverageDiffAxis;
 
+    /* Brightness profile row average differentiated - second method pane */
+    @FXML
+    public BorderPane brightnessProfileRowAverageDiffSecondPane;
+    @FXML
+    public AreaChart<Number, Number> brightnessProfileRowAverageDiffSecondAreaChart;
+    @FXML
+    public NumberAxis profileRowAverageDiffSecondLengthAxis;
+    @FXML
+    public NumberAxis brightnessValuesRowAverageDiffSecondAxis;
+
+    /* Brightness profile column average differentiated - second method pane */
+    @FXML
+    public BorderPane brightnessProfileColumnAverageDiffSecondPane;
+    @FXML
+    public AreaChart<Number, Number> brightnessProfileColumnAverageDiffSecondAreaChart;
+    @FXML
+    public NumberAxis profileColumnAverageDiffSecondLengthAxis;
+    @FXML
+    public NumberAxis brightnessValuesColumnAverageDiffSecondAxis;
+
     ObservableList<XYChart.Series<Number, Number>> currentProfileValues = FXCollections.observableArrayList();
     ObservableList<Double> brightnessProfileRowAverageData = FXCollections.observableArrayList();
     ObservableList<Double> brightnessProfileColumnAverageData = FXCollections.observableArrayList();
     ObservableList<Double> brightnessProfileRowAverageDiffData = FXCollections.observableArrayList();
     ObservableList<Double> brightnessProfileColumnAverageDiffData = FXCollections.observableArrayList();
+    ObservableList<Double> brightnessProfileRowAverageDiffSecondData = FXCollections.observableArrayList();
+    ObservableList<Double> brightnessProfileColumnAverageDiffSecondData = FXCollections.observableArrayList();
     private ObservableList<XYChart.Series<Number, Number>> rowAverageProfileValues = FXCollections.observableArrayList();
     private ObservableList<XYChart.Series<Number, Number>> columnAverageProfileValues = FXCollections.observableArrayList();
     private ObservableList<XYChart.Series<Number, Number>> rowAverageDiffProfileValues = FXCollections.observableArrayList();
     private ObservableList<XYChart.Series<Number, Number>> columnAverageDiffProfileValues = FXCollections.observableArrayList();
+    private ObservableList<XYChart.Series<Number, Number>> rowAverageDiffSecondProfileValues = FXCollections.observableArrayList();
+    private ObservableList<XYChart.Series<Number, Number>> columnAverageDiffSecondProfileValues = FXCollections.observableArrayList();
 
     /* File information pane private members */
     private Tooltip nameTooltip = new Tooltip();
@@ -191,6 +215,8 @@ public class MasterRegionController extends Controller {
         addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileColumnAverageData, columnAverageProfileValues);
         addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileRowAverageDiffData, rowAverageDiffProfileValues);
         addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileColumnAverageDiffData, columnAverageDiffProfileValues);
+        addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileRowAverageDiffSecondData, rowAverageDiffSecondProfileValues);
+        addListenerToChangeSeriesOnChangeAverageProfileData(brightnessProfileColumnAverageDiffSecondData, columnAverageDiffSecondProfileValues);
 
         brightnessProfileRowAverageAreaChart.setData(rowAverageProfileValues);
         brightnessProfileRowAverageAreaChart.setLegendVisible(false);
@@ -208,10 +234,23 @@ public class MasterRegionController extends Controller {
 
         brightnessProfileRowAverageDiffAreaChart.setData(rowAverageDiffProfileValues);
         brightnessProfileRowAverageDiffAreaChart.setLegendVisible(false);
+        brightnessValuesRowAverageDiffAxis.setAutoRanging(false);
+        brightnessValuesRowAverageDiffAxis.setLowerBound(0);
+        brightnessValuesRowAverageDiffAxis.setUpperBound(255);
+        brightnessValuesRowAverageDiffAxis.setTickUnit(20);
 
         brightnessProfileColumnAverageDiffAreaChart.setData(columnAverageDiffProfileValues);
         brightnessProfileColumnAverageDiffAreaChart.setLegendVisible(false);
+        brightnessValuesColumnAverageDiffAxis.setAutoRanging(false);
+        brightnessValuesColumnAverageDiffAxis.setLowerBound(0);
+        brightnessValuesColumnAverageDiffAxis.setUpperBound(255);
+        brightnessValuesColumnAverageDiffAxis.setTickUnit(20);
 
+        brightnessProfileRowAverageDiffSecondAreaChart.setData(rowAverageDiffSecondProfileValues);
+        brightnessProfileRowAverageDiffSecondAreaChart.setLegendVisible(false);
+
+        brightnessProfileColumnAverageDiffSecondAreaChart.setData(columnAverageDiffSecondProfileValues);
+        brightnessProfileColumnAverageDiffSecondAreaChart.setLegendVisible(false);
 
         /* Clear selection when disabled */
         brightnessProfileCheckbox.disableProperty().addListener((observable, oldValue, newValue) -> {

@@ -58,6 +58,10 @@ public class RootLayoutController extends Controller {
     @FXML
     public CheckMenuItem showBrightnessProfileColumnAverageDifferentiatedCheckMenuItem;
     @FXML
+    public CheckMenuItem showBrightnessProfileRowAverageDifferentiatedSecondCheckMenuItem;
+    @FXML
+    public CheckMenuItem showBrightnessProfileColumnAverageDifferentiatedSecondCheckMenuItem;
+    @FXML
     public SplitPane splitPane;
     @FXML
     public StackPane rootStackPane;
@@ -94,12 +98,16 @@ public class RootLayoutController extends Controller {
         masterRegionController.brightnessProfilePane.managedProperty().bind(showBrightnessProfileCheckMenuItem.selectedProperty());
         masterRegionController.brightnessProfileRowAveragePane.visibleProperty().bind(showBrightnessProfileRowAverageCheckMenuItem.selectedProperty());
         masterRegionController.brightnessProfileRowAveragePane.managedProperty().bind(showBrightnessProfileRowAverageCheckMenuItem.selectedProperty());
-        masterRegionController.brightnessProfileColumnAveragePane.visibleProperty().bind(showBrightnessProfileRowAverageDifferentiatedCheckMenuItem.selectedProperty());
-        masterRegionController.brightnessProfileColumnAveragePane.managedProperty().bind(showBrightnessProfileRowAverageDifferentiatedCheckMenuItem.selectedProperty());
-        masterRegionController.brightnessProfileRowAverageDiffPane.visibleProperty().bind(showBrightnessProfileColumnAverageCheckMenuItem.selectedProperty());
-        masterRegionController.brightnessProfileRowAverageDiffPane.managedProperty().bind(showBrightnessProfileColumnAverageCheckMenuItem.selectedProperty());
+        masterRegionController.brightnessProfileColumnAveragePane.visibleProperty().bind(showBrightnessProfileColumnAverageCheckMenuItem.selectedProperty());
+        masterRegionController.brightnessProfileColumnAveragePane.managedProperty().bind(showBrightnessProfileColumnAverageCheckMenuItem.selectedProperty());
+        masterRegionController.brightnessProfileRowAverageDiffPane.visibleProperty().bind(showBrightnessProfileRowAverageDifferentiatedCheckMenuItem.selectedProperty());
+        masterRegionController.brightnessProfileRowAverageDiffPane.managedProperty().bind(showBrightnessProfileRowAverageDifferentiatedCheckMenuItem.selectedProperty());
         masterRegionController.brightnessProfileColumnAverageDiffPane.visibleProperty().bind(showBrightnessProfileColumnAverageDifferentiatedCheckMenuItem.selectedProperty());
         masterRegionController.brightnessProfileColumnAverageDiffPane.managedProperty().bind(showBrightnessProfileColumnAverageDifferentiatedCheckMenuItem.selectedProperty());
+        masterRegionController.brightnessProfileRowAverageDiffSecondPane.visibleProperty().bind(showBrightnessProfileRowAverageDifferentiatedSecondCheckMenuItem.selectedProperty());
+        masterRegionController.brightnessProfileRowAverageDiffSecondPane.managedProperty().bind(showBrightnessProfileRowAverageDifferentiatedSecondCheckMenuItem.selectedProperty());
+        masterRegionController.brightnessProfileColumnAverageDiffSecondPane.visibleProperty().bind(showBrightnessProfileColumnAverageDifferentiatedSecondCheckMenuItem.selectedProperty());
+        masterRegionController.brightnessProfileColumnAverageDiffSecondPane.managedProperty().bind(showBrightnessProfileColumnAverageDifferentiatedSecondCheckMenuItem.selectedProperty());
 
         masterRegionController.xText.textProperty().bind(viewRegionController.getLastPixelInformation().xPosProperty().asString("%.0f"));
         masterRegionController.yText.textProperty().bind(viewRegionController.getLastPixelInformation().yPosProperty().asString("%.0f"));
@@ -220,6 +228,8 @@ public class RootLayoutController extends Controller {
         masterRegionController.brightnessProfileColumnAverageData.clear();
         masterRegionController.brightnessProfileRowAverageDiffData.clear();
         masterRegionController.brightnessProfileColumnAverageDiffData.clear();
+        masterRegionController.brightnessProfileRowAverageDiffSecondData.clear();
+        masterRegionController.brightnessProfileColumnAverageDiffSecondData.clear();
 
         Utils.showSpinner();
 
@@ -385,6 +395,8 @@ public class RootLayoutController extends Controller {
                 masterRegionController.brightnessProfileColumnAverageData.addAll(ImageUtils.calculateBrightnessProfileColumnAverage(viewRegionController.getImageMat()));
                 masterRegionController.brightnessProfileRowAverageDiffData.addAll(ImageUtils.calculateBrightnessProfileRowAverageDiff(viewRegionController.getImageMat()));
                 masterRegionController.brightnessProfileColumnAverageDiffData.addAll(ImageUtils.calculateBrightnessProfileColumnAverageDiff(viewRegionController.getImageMat()));
+                masterRegionController.brightnessProfileRowAverageDiffSecondData.addAll(ImageUtils.calculateBrightnessProfileRowAverageDiffSecond(viewRegionController.getImageMat()));
+                masterRegionController.brightnessProfileColumnAverageDiffSecondData.addAll(ImageUtils.calculateBrightnessProfileColumnAverageDiffSecond(viewRegionController.getImageMat()));
 
                 if (viewRegionController.getImageMat().channels() == 3 || viewRegionController.getImageMat().channels() == 4) {
                     showChannelsCheckMenuItem.setDisable(false);

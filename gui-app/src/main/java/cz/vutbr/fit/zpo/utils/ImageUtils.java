@@ -155,6 +155,28 @@ public class ImageUtils {
         return calculateBrightnessProfileColumnAverage(sobel);
     }
 
+    public static List<Double> calculateBrightnessProfileRowAverageDiffSecond(Mat im) {
+        return differentiate(calculateBrightnessProfileRowAverage(im));
+    }
+
+    public static List<Double> calculateBrightnessProfileColumnAverageDiffSecond(Mat im) {
+        return differentiate(calculateBrightnessProfileColumnAverage(im));
+    }
+
+    private static List<Double> differentiate(List<Double> values) {
+        List<Double> diff = new ArrayList<>();
+        diff.add(0.0);
+        for (int i = 1; i < values.size() - 1; i++) {
+            double x1 = i - 1;
+            double x2 = i + 1;
+            double y1 = values.get((int) x1);
+            double y2 = values.get((int) x2);
+            diff.add((y2 - y1) / (x2 - x1));
+        }
+        diff.add(0.0);
+        return diff;
+    }
+
     public static Mat sobelOperator(Mat im) {
         Mat greyscale;
         Mat result = new Mat();
