@@ -16,4 +16,8 @@ Popis a ovladanie programu
     obrazok alebo predchadzajuce. Cez View menu je mozne schovavat a zobrazovat jednotlive 'taby' s urcitymi
     informaciami.
 
-Instalacia a spustanie
+Kompilacia
+    gradle build
+
+Spustenie
+    gradle run
