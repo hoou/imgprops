@@ -33,21 +33,17 @@ public class ViewRegionController extends Controller {
     public StackPane viewStackPane;
     @FXML
     public StackPane viewImageStackPane;
-
-    private ImageView imageView = new ImageView();
+    ObservableList<Integer> profileData = FXCollections.observableArrayList();
+    private ImageView imageView;
     private AnchorPane drawingPane;
     private Mat imageMat;
     private List<Mat> channelPlanes;
     private PixelInformation lastPixelInformation;
     private Rectangle profileRect;
 
-    ObservableList<Integer> profileData = FXCollections.observableArrayList();
-
     @Override
     public void onStart() {
         lastPixelInformation = new PixelInformation();
-        imageView.setOnMouseMoved(this::handleOnMouseMove);
-        imageView.setOnMouseExited(this::handleOnMouseExited);
     }
 
     @Override
@@ -76,6 +72,9 @@ public class ViewRegionController extends Controller {
     }
 
     void setImageView(Image image) {
+        imageView = new ImageView();
+        imageView.setOnMouseMoved(this::handleOnMouseMove);
+        imageView.setOnMouseExited(this::handleOnMouseExited);
         imageView.setFitWidth(imageMat.cols());
         imageView.setFitHeight(imageMat.rows());
         imageView.setImage(image);
